@@ -1,0 +1,50 @@
+stages:
+    - build
+    - test
+    - export
+    - deploy
+
+# https://gitlab.com/barichello/godot-ci
+# https://docs.gitlab.com/ee/ci/yaml/
+
+windows:
+    image: barichello/godot-ci:$GODOT_VERSION
+    stage: export
+    tags:
+        - docker
+    script:
+        - cd "$NAME"
+        - godot -v --export "Windows Desktop" ../"$NAME"/"$NAME-$VERSION.exe"
+    artifacts:
+        expire_in: 1 day
+        untracked: true
+        name:
+            "$NAME-$VERSION-windows"
+
+linux:
+    image: barichello/godot-ci:$GODOT_VERSION
+    stage: export
+    tags:
+        - docker
+    script:
+        - cd "$NAME"
+        - godot -v --export "Linux/X11" ../"$NAME"/"$NAME-$VERSION.x86_64"
+    artifacts:
+        expire_in: 1 day
+        untracked: true
+        name:
+            "$NAME-$VERSION-linux"
+
+web:
+    image: barichello/godot-ci:$GODOT_VERSION
+    stage: export
+    tags:
+        - docker
+    script:
+        - cd "$NAME"
+        - godot -v --export "HTML5" ../"$NAME"/"$NAME-$VERSION.html"
+    artifacts:
+        expire_in: 1 day
+        untracked: true
+        name:
+            "$NAME-$VERSION-web"
