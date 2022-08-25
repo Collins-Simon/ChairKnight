@@ -1,3 +1,10 @@
+<!--
+Remember to do these things!!!
+- Add the appropriate labels.
+- Add the current milestone.
+- Assign whoever has the primary responsibility of closing/addressing the issue.
+-->
+
 ### Quick Description:
 <!-- Summarize the issue in one line.
 E.g. Game needs a function for spawning an Enemy. -->
