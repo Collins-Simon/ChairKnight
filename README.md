@@ -15,7 +15,7 @@ classDiagram
     World "1" -- "1" Room
     World "1" -- "1" Player
     Enemy "1" -- "*" GrapplePoint
-    GrapplePoint "1" -- "*" Player
+    GrapplePoint "1" <-- "*" Player
     Wall "0..1" -- "*" GrapplePoint
     Room "1" -- "*" Enemy
     Room "1" -- "*" Wall
