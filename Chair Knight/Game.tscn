@@ -22,7 +22,7 @@ remote_path = NodePath("../../Camera2D")
 position = Vector2( -50, 0 )
 
 [node name="GrappleTarget2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 53, 49 )
+position = Vector2( 349, -206 )
 
 [node name="GrappleTarget3" parent="." instance=ExtResource( 2 )]
 position = Vector2( -34, -79 )
