@@ -9,25 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "RigidBody2D",
-"class": "Player",
+"base": "Control",
+"class": "MenuSystem",
 "language": "GDScript",
-"path": "res://Player.gd"
+"path": "res://Menu/MenuSystem.gd"
 }, {
-"base": "Node2D",
-"class": "Rope",
+"base": "Control",
+"class": "SubMenu",
 "language": "GDScript",
-"path": "res://Rope.gd"
+"path": "res://Menu/SubMenu.gd"
 } ]
 _global_script_class_icons={
-"Player": "",
-"Rope": ""
+"MenuSystem": "",
+"SubMenu": ""
 }
 
 [application]
 
-config/name="Playground"
-run/main_scene="res://Game.tscn"
+config/name="Chair Knight"
+run/main_scene="res://Menu/MenuSystem.tscn"
 config/icon="res://icon.png"
 
 [global]
