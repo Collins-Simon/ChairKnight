@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GrappleTarget.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Game.gd" type="Script" id=3]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=4]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 372, 50 )
+z_index = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="GrappleTarget" parent="." instance=ExtResource( 2 )]
+position = Vector2( -50, 0 )
+
+[node name="GrappleTarget2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 349, -206 )
+
+[node name="GrappleTarget3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -34, -79 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 372, 50 )
+current = true
+smoothing_enabled = true
+
+[node name="Enemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 85, -54 )
+collision_layer = 3
+collision_mask = 3
+
+[connection signal="attempted_peg" from="Player" to="." method="_on_Player_attempted_peg"]
+[connection signal="clicked" from="GrappleTarget" to="." method="_on_GrappleTarget_clicked"]
+[connection signal="clicked" from="GrappleTarget2" to="." method="_on_GrappleTarget_clicked"]
+[connection signal="clicked" from="GrappleTarget3" to="." method="_on_GrappleTarget_clicked"]
+[connection signal="died" from="Enemy" to="." method="_on_Enemy_died"]
