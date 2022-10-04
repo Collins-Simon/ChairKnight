@@ -8,9 +8,26 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Control",
+"class": "MenuSystem",
+"language": "GDScript",
+"path": "res://Menu/MenuSystem.gd"
+}, {
+"base": "Control",
+"class": "SubMenu",
+"language": "GDScript",
+"path": "res://Menu/SubMenu.gd"
+} ]
+_global_script_class_icons={
+"MenuSystem": "",
+"SubMenu": ""
+}
+
 [application]
 
 config/name="Chair Knight"
+run/main_scene="res://Menu/MenuSystem.tscn"
 config/icon="res://icon.png"
 
 [gui]
