@@ -9,10 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "EditorVCSInterface",
+"class": "GitAPI",
+"language": "NativeScript",
+"path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
 "base": "Control",
 "class": "MenuSystem",
 "language": "GDScript",
 "path": "res://Menu/MenuSystem.gd"
+}, {
+"base": "RigidBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+}, {
+"base": "Node2D",
+"class": "Rope",
+"language": "GDScript",
+"path": "res://Rope.gd"
 }, {
 "base": "Control",
 "class": "SubMenu",
@@ -20,7 +35,10 @@ _global_script_classes=[ {
 "path": "res://Menu/SubMenu.gd"
 } ]
 _global_script_class_icons={
+"GitAPI": "",
 "MenuSystem": "",
+"Player": "",
+"Rope": "",
 "SubMenu": ""
 }
 
@@ -29,6 +47,15 @@ _global_script_class_icons={
 config/name="Chair Knight"
 run/main_scene="res://Menu/MenuSystem.tscn"
 config/icon="res://icon.png"
+
+[editor]
+
+version_control_autoload_on_startup=true
+version_control_plugin_name="GitAPI"
+
+[gdnative]
+
+singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
 
 [global]
 
