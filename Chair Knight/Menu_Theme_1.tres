@@ -1,3 +1,33 @@
-[gd_resource type="Theme" format=2]
+[gd_resource type="Theme" load_steps=6 format=2]
+
+[ext_resource path="res://Assets/Fonts/montreal/Montreal.tres" type="DynamicFont" id=1]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.220226, 0.105057, 0.527344, 1 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.219608, 0.47451, 0.376471, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.788235, 0.956863, 0.333333, 1 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.458824, 0.317647, 0.0196078, 0.619608 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [resource]
+Button/fonts/font = ExtResource( 1 )
+Button/styles/focus = SubResource( 4 )
+Panel/styles/panel = SubResource( 1 )
+ProgressBar/colors/font_color = Color( 0, 0, 0, 1 )
+ProgressBar/fonts/font = ExtResource( 1 )
+ProgressBar/styles/bg = SubResource( 2 )
+ProgressBar/styles/fg = SubResource( 3 )
+VBoxContainer/constants/separation = 19
