@@ -12,6 +12,8 @@ var joints = []
 var start_body : PhysicsBody2D = null
 var end_body : PhysicsBody2D = null
 
+onready var line = $Line2D
+
 
 func init(start, end):
 	start_body = start
@@ -59,5 +61,9 @@ func _ready():
 		#joints[i].rotation = joints[i].global_position.angle_to_point(links[i+1].global_position) + deg2rad(90)
 		add_child(joints[i])
 
-func pull():
-	for joint in joints: joint.pull()
+	for link in links:
+		line.add_point(link.global_position)
+
+func _physics_process(delta):
+	for i in range(links.size()):
+		line.set_point_position(i, links[i].global_position)

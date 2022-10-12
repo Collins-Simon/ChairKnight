@@ -13,6 +13,7 @@ gravity_scale = 0.0
 can_sleep = false
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
 
