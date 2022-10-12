@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Images/icon.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Tile" type="StaticBody2D"]
+process_priority = -28
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+process_priority = 1
+scale = Vector2( 3, 3 )
+z_index = 10
+shape = SubResource( 1 )
+one_way_collision_margin = 0.0

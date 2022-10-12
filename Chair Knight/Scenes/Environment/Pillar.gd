@@ -1,2 +1,2 @@
-extends GrappleTarget
+extends PhysicsBody2D
 class_name Pillar
