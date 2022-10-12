@@ -24,26 +24,28 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.5
-margin_top = -20.0
-margin_right = 20.5
-margin_bottom = 20.0
+margin_left = -82.0
+margin_top = -50.0
+margin_right = 82.0
+margin_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="buttonStart" type="Button" parent="TitleMenu/VBoxContainer"]
-margin_right = 71.0
-margin_bottom = 20.0
+margin_right = 164.0
+margin_bottom = 37.0
 text = "START"
 
 [node name="buttonOptions" type="Button" parent="TitleMenu/VBoxContainer"]
-margin_top = 24.0
-margin_right = 71.0
-margin_bottom = 44.0
+margin_top = 56.0
+margin_right = 164.0
+margin_bottom = 93.0
 text = "OPTIONS"
 
 [node name="buttonQuit" type="Button" parent="TitleMenu/VBoxContainer"]
-margin_top = 48.0
-margin_right = 71.0
-margin_bottom = 68.0
+margin_top = 112.0
+margin_right = 164.0
+margin_bottom = 149.0
 text = "QUIT"
 
 [node name="OptionsMenu" type="Control" parent="."]
@@ -60,7 +62,7 @@ text = "BACK"
 
 [connection signal="focus_entered" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu" method="register_focus_as_local"]
 [connection signal="mouse_entered" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu/VBoxContainer/buttonStart" method="grab_focus"]
-[connection signal="pressed" from="TitleMenu/VBoxContainer/buttonStart" to="." method="_on_buttonStart_pressed"]
+[connection signal="pressed" from="TitleMenu/VBoxContainer/buttonStart" to="." method="custom_load_scene" binds= [ "res://Scenes/Game.tscn" ]]
 [connection signal="ready" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu/VBoxContainer/buttonStart" method="grab_focus"]
 [connection signal="focus_entered" from="TitleMenu/VBoxContainer/buttonOptions" to="TitleMenu" method="register_focus_as_local"]
 [connection signal="mouse_entered" from="TitleMenu/VBoxContainer/buttonOptions" to="TitleMenu/VBoxContainer/buttonOptions" method="grab_focus"]

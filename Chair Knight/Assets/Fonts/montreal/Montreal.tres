@@ -2,9 +2,6 @@
 
 [ext_resource path="res://Assets/Fonts/montreal/Montreal-Regular.ttf" type="DynamicFontData" id=1]
 
-
 [resource]
-
-size = 32
+size = 24
 font_data = ExtResource( 1 )
-
