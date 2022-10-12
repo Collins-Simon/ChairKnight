@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "PhysicsBody2D",
+"class": "GrappleTarget",
+"language": "GDScript",
+"path": "res://Scenes/Equipment/GrappleTarget.gd"
+}, {
 "base": "Control",
 "class": "MenuSystem",
 "language": "GDScript",
 "path": "res://Scenes/Menu/MenuSystem.gd"
+}, {
+"base": "GrappleTarget",
+"class": "Pillar",
+"language": "GDScript",
+"path": "res://Scenes/Environment/Pillar.gd"
 }, {
 "base": "RigidBody2D",
 "class": "Player",
@@ -30,7 +40,9 @@ _global_script_classes=[ {
 "path": "res://Scenes/Menu/SubMenu.gd"
 } ]
 _global_script_class_icons={
+"GrappleTarget": "",
 "MenuSystem": "",
+"Pillar": "",
 "Player": "",
 "Rope": "",
 "SubMenu": ""

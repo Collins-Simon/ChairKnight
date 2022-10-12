@@ -3,11 +3,18 @@ extends Node2D
 
 var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
 var peg_scene = preload("res://Scenes/Equipment/Peg.tscn")
+var pillar_scene = preload("res://Scenes/Environment/Pillar.tscn")
 
 onready var player = $"%Player"
 onready var entities = $"%Entities"
 onready var ropes = $"%Ropes"
 onready var grapple_rope: Rope = null;
+
+
+func _ready() -> void:
+	var pillar: Pillar = pillar_scene.instance()
+	pillar.connect("clicked", self, "_on_GrappleTarget_clicked")
+	entities.add_child(pillar)
 
 
 func _on_GrappleTarget_clicked(target):

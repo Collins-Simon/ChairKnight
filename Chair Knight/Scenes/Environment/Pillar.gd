@@ -1,0 +1,2 @@
+extends GrappleTarget
+class_name Pillar

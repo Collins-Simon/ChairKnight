@@ -15,7 +15,6 @@ unique_name_in_owner = true
 [node name="Player" parent="World/Entities" instance=ExtResource( 1 )]
 unique_name_in_owner = true
 position = Vector2( 372, 50 )
-z_index = 1
 __meta__ = {
 "_edit_group_": true
 }
