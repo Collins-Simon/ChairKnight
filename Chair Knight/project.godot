@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Menu/MenuSystem.gd"
 }, {
+"base": "RigidBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+}, {
+"base": "Node2D",
+"class": "Rope",
+"language": "GDScript",
+"path": "res://Rope.gd"
+}, {
 "base": "Control",
 "class": "SubMenu",
 "language": "GDScript",
@@ -21,6 +31,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "MenuSystem": "",
+"Player": "",
+"Rope": "",
 "SubMenu": ""
 }
 
@@ -29,6 +41,15 @@ _global_script_class_icons={
 config/name="Chair Knight"
 run/main_scene="res://Menu/MenuSystem.tscn"
 config/icon="res://icon.png"
+
+[editor]
+
+version_control_autoload_on_startup=true
+version_control_plugin_name="GitAPI"
+
+[gdnative]
+
+singletons=[  ]
 
 [global]
 
