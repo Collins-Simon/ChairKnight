@@ -6,8 +6,9 @@
 
 [sub_resource type="CircleShape2D" id=1]
 
-[node name="Pillar" type="StaticBody2D"]
+[node name="Pillar" type="RigidBody2D"]
 collision_mask = 0
+mode = 1
 script = ExtResource( 1 )
 
 [node name="GrappleArea" parent="." instance=ExtResource( 2 )]

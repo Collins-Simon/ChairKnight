@@ -1,5 +1,4 @@
-extends RigidBody2D
-
+extends GrappleBody
 class_name Player
 
 

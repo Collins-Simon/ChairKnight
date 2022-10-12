@@ -20,8 +20,14 @@ func _ready() -> void:
 	# Add an Enemy
 	var enemy: Enemy = enemy_scene.instance()
 	enemy.connect("clicked", self, "_on_GrappleTarget_clicked")
+	enemy.connect("died", self, "_on_Enemy_died")
 	entities.add_child(enemy)
 
+func _on_Enemy_died(enemy: Enemy) -> void:
+	for rope in enemy.get_attached_ropes():
+		if rope == grapple_rope: grapple_rope = null
+		destroy_rope(rope)
+	enemy.queue_free()
 
 func _on_GrappleTarget_clicked(left_click: bool, target: GrappleTarget):
 	if left_click:
@@ -53,9 +59,12 @@ func _unhandled_input(event):
 
 func ungrapple():
 	if grapple_rope == null: return
-	ropes.remove_child(grapple_rope)
-	grapple_rope.queue_free()
+	destroy_rope(grapple_rope)
 	grapple_rope = null
+
+func destroy_rope(rope: Rope):
+	ropes.remove_child(rope)
+	rope.destroy()
 
 func attempt_rope_launch():
 	if grapple_rope == null: return

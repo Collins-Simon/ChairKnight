@@ -14,7 +14,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Characters/Enemy.gd"
 }, {
-"base": "PhysicsBody2D",
+"base": "RigidBody2D",
+"class": "GrappleBody",
+"language": "GDScript",
+"path": "res://Scenes/Equipment/GrappleBody.gd"
+}, {
+"base": "GrappleBody",
 "class": "GrappleTarget",
 "language": "GDScript",
 "path": "res://Scenes/Equipment/GrappleTarget.gd"
@@ -39,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Environment/Pillar.gd"
 }, {
-"base": "RigidBody2D",
+"base": "GrappleBody",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Scenes/Characters/Player.gd"
@@ -56,6 +61,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Enemy": "",
+"GrappleBody": "",
 "GrappleTarget": "",
 "Hitbox": "",
 "MenuSystem": "",

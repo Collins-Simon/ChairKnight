@@ -1,4 +1,4 @@
-extends PhysicsBody2D
+extends GrappleBody
 class_name GrappleTarget
 
 

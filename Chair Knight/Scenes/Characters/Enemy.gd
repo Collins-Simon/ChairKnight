@@ -3,10 +3,12 @@ class_name Enemy
 
 var health := 1000
 
+signal died(enemy)
+
 
 func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	var damage := min(area.damage, health)
-	print(damage)
+	#print(damage)
 	health -= damage
 	if health <= 0:
-		queue_free()
+		emit_signal("died", self)
