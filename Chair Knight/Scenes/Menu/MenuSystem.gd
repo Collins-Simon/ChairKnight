@@ -42,7 +42,7 @@ func custom_load_scene(path: String):
 	var loading_scene = load(LOADING_SCENE_PATH).instance()
 	var loading_bar : ProgressBar = loading_scene.get_node("bar")
 
-	get_tree().get_root().add_child(loading_scene)
+	add_child(loading_scene)
 
 	# handle loading
 	while true:
