@@ -8,8 +8,6 @@ extends Control
 ## Path to the scene to use in the interim of changing the current scene.
 const LOADING_SCENE_PATH = "res://Scenes/Menu/LoadingScene.tscn"
 
-const GAME_SCENE_PATH = "res://Scenes/Game.tscn"
-
 ## The currently visible SubMenu
 onready var active_menu : SubMenu = $TitleMenu
 
@@ -44,7 +42,7 @@ func custom_load_scene(path: String):
 	var loading_scene = load(LOADING_SCENE_PATH).instance()
 	var loading_bar : ProgressBar = loading_scene.get_node("bar")
 
-	get_tree().get_root().add_child(loading_scene)
+	add_child(loading_scene)
 
 	# handle loading
 	while true:
@@ -66,6 +64,3 @@ func custom_load_scene(path: String):
 				return
 		yield(get_tree(), "idle_frame") # wait a frame before continuing
 
-
-func _on_buttonStart_pressed() -> void:
-	custom_load_scene(GAME_SCENE_PATH)
