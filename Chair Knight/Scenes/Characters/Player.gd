@@ -6,8 +6,6 @@ class_name Player
 export(float) var max_speed := 5000
 var prev_velocity = Vector2.ZERO
 
-signal attempted_peg(pos)
-
 
 func _ready() -> void:
 	self.gravity_scale = 0
@@ -25,11 +23,6 @@ func _physics_process(delta: float) -> void:
 		#linear_velocity = linear_velocity.move_toward(Vector2.ZERO, delta * 300)
 	linear_velocity *= 0.95
 	prev_velocity = linear_velocity
-
-
-func _on_PegArea_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton and event.button_index == BUTTON_RIGHT and event.is_pressed():
-		emit_signal("attempted_peg", get_global_mouse_position())
 
 func launch(target_pos : Vector2):
 	var diff := target_pos - global_position

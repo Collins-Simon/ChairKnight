@@ -35,5 +35,3 @@ smoothing_enabled = true
 [node name="UI" type="Control" parent="CanvasLayer"]
 margin_right = 40.0
 margin_bottom = 40.0
-
-[connection signal="attempted_peg" from="World/Entities/Player" to="." method="_on_Player_attempted_peg"]
