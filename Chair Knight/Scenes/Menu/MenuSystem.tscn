@@ -60,7 +60,7 @@ text = "BACK"
 
 [connection signal="focus_entered" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu" method="register_focus_as_local"]
 [connection signal="mouse_entered" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu/VBoxContainer/buttonStart" method="grab_focus"]
-[connection signal="pressed" from="TitleMenu/VBoxContainer/buttonStart" to="." method="_on_buttonStart_pressed"]
+[connection signal="pressed" from="TitleMenu/VBoxContainer/buttonStart" to="." method="custom_load_scene" binds= [ "res://Scenes/Game.tscn" ]]
 [connection signal="ready" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu/VBoxContainer/buttonStart" method="grab_focus"]
 [connection signal="focus_entered" from="TitleMenu/VBoxContainer/buttonOptions" to="TitleMenu" method="register_focus_as_local"]
 [connection signal="mouse_entered" from="TitleMenu/VBoxContainer/buttonOptions" to="TitleMenu/VBoxContainer/buttonOptions" method="grab_focus"]
