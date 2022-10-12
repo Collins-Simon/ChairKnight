@@ -2,26 +2,23 @@ extends Node2D
 
 
 var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
-var rope: Rope = null
-
 var peg_scene = preload("res://Scenes/Equipment/Peg.tscn")
 
-onready var player = $Player
-
+onready var player = $"%Player"
+onready var entities = $"%Entities"
+onready var ropes = $"%Ropes"
+onready var grapple_rope: Rope = null;
 
 
 func _on_GrappleTarget_clicked(target):
-	if rope != null: return
-	rope = rope_scene.instance()
-	rope.init(player, target)
-	add_child(rope)
+	if grapple_rope != null: return
+	grapple_rope = rope_scene.instance()
+	grapple_rope.init(player, target)
+	ropes.add_child(grapple_rope)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_pressed():
-		if rope == null: return
-		remove_child(rope)
-		rope.queue_free()
-		rope = null
+		ungrapple()
 
 	elif event is InputEventKey:
 		if event.scancode == KEY_R and event.is_pressed():
@@ -29,28 +26,28 @@ func _unhandled_input(event):
 		elif event.scancode == KEY_SPACE and event.is_pressed():
 			attempt_rope_launch()
 
+func ungrapple():
+	if grapple_rope == null: return
+	ropes.remove_child(grapple_rope)
+	grapple_rope.queue_free()
+	grapple_rope = null
 
 func attempt_rope_launch():
-	if rope == null: return
-	var end_body = rope.end_body
-	remove_child(rope)
-	rope.queue_free()
-	rope = null
-
+	if grapple_rope == null: return
+	var end_body = grapple_rope.end_body
+	ungrapple()
 	player.launch(end_body.global_position)
 
 
 func _on_Player_attempted_peg(pos):
-	if rope == null: return
-	var end_body = rope.end_body
-	remove_child(rope)
-	rope.queue_free()
-	rope = null
+	if grapple_rope == null: return
+	var end_body = grapple_rope.end_body
+	ungrapple()
 
 	var peg = peg_scene.instance()
 	peg.global_position = pos;
-	add_child(peg)
+	entities.add_child(peg)
 
 	var detached_rope = rope_scene.instance()
 	detached_rope.init(peg, end_body)
-	add_child(detached_rope)
+	ropes.add_child(detached_rope)
