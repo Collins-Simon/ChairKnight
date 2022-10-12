@@ -1,4 +1,5 @@
 extends PhysicsBody2D
+class_name GrappleTarget
 
 
 signal clicked(target)

@@ -4,7 +4,6 @@ class_name Player
 
 
 export(float) var max_speed := 5000
-
 var prev_velocity = Vector2.ZERO
 
 signal attempted_peg(pos)
