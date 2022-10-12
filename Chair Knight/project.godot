@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "GrappleTarget",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Scenes/Characters/Enemy.gd"
+}, {
 "base": "PhysicsBody2D",
 "class": "GrappleTarget",
 "language": "GDScript",
@@ -40,6 +45,7 @@ _global_script_classes=[ {
 "path": "res://Scenes/Menu/SubMenu.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
 "GrappleTarget": "",
 "MenuSystem": "",
 "Pillar": "",
