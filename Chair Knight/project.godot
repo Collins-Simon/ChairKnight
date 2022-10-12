@@ -19,10 +19,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Equipment/GrappleTarget.gd"
 }, {
+"base": "Area2D",
+"class": "Hitbox",
+"language": "GDScript",
+"path": "res://Scenes/Characters/Hitbox.gd"
+}, {
 "base": "Control",
 "class": "MenuSystem",
 "language": "GDScript",
 "path": "res://Scenes/Menu/MenuSystem.gd"
+}, {
+"base": "SubMenu",
+"class": "OptionsMenu",
+"language": "GDScript",
+"path": "res://Scenes/Menu/OptionsMenu.gd"
 }, {
 "base": "GrappleTarget",
 "class": "Pillar",
@@ -47,7 +57,9 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Enemy": "",
 "GrappleTarget": "",
+"Hitbox": "",
 "MenuSystem": "",
+"OptionsMenu": "",
 "Pillar": "",
 "Player": "",
 "Rope": "",
@@ -98,6 +110,14 @@ ui_down={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":83,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Enemy"
+2d_physics/layer_4="PlayerHurtbox"
+2d_physics/layer_5="EnemyHurtbox"
 
 [physics]
 

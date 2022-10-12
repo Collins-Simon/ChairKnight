@@ -4,11 +4,9 @@ class_name Player
 
 
 export(float) var max_speed := 5000
-var prev_velocity = Vector2.ZERO
 
+onready var hitbox = $Hitbox
 
-func _ready() -> void:
-	self.gravity_scale = 0
 
 func _physics_process(delta: float) -> void:
 
@@ -22,7 +20,7 @@ func _physics_process(delta: float) -> void:
 	#else:
 		#linear_velocity = linear_velocity.move_toward(Vector2.ZERO, delta * 300)
 	linear_velocity *= 0.95
-	prev_velocity = linear_velocity
+	hitbox.damage = linear_velocity.length()
 
 func launch(target_pos : Vector2):
 	var diff := target_pos - global_position
