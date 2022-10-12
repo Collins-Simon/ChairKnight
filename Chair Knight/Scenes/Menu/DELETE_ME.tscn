@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/Fonts/droid-sans/DroidSans.tres" type="DynamicFont" id=1]
+
+
+[sub_resource type="PlaneMesh" id=1]
+
+[sub_resource type="CapsuleMesh" id=2]
+
+[sub_resource type="PrismMesh" id=3]
+
+[sub_resource type="SphereMesh" id=4]
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="TextMesh" id=6]
+text = "BLAH!"
+font = ExtResource( 1 )
+
+[sub_resource type="CylinderMesh" id=7]
+
+[sub_resource type="PlaneMesh" id=8]
+
+[node name="DELETE_ME" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.829934, -0.200874, 0.520441, 0, 0.932922, 0.360078, -0.557861, -0.298841, 0.774264, 7.17211, 6.76611, 7.45819 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.911331, -0.198653, -0.360572, 0, 0.875869, -0.482549, 0.411673, 0.439762, 0.798207, 4.14393, -2.37777, -4.75386 )
+mesh = SubResource( 1 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.53198, 2.22018, -4.54569 )
+mesh = SubResource( 2 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 0.70995, 0.646017, 0.280416, -0.600847, 0.763323, -0.237322, -0.367362, 0, 0.930078, -5.35291, -1.86194, -3.25216 )
+mesh = SubResource( 3 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.32722 )
+mesh = SubResource( 4 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.10849, 2.08219, 2.67569 )
+mesh = SubResource( 5 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="."]
+transform = Transform( 1.60354, 0, 2.53548, 0, 3, 0, -2.53548, 0, 1.60354, -2.97448, 2.01559, 0 )
+mesh = SubResource( 6 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.90427, -5.54414 )
+mesh = SubResource( 7 )
+
+[node name="MeshInstance8" type="MeshInstance" parent="."]
+mesh = SubResource( 8 )
