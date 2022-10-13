@@ -21,6 +21,8 @@ func _ready() -> void:
 	var enemy: Enemy = enemy_scene.instance()
 	enemy.connect("clicked", self, "_on_GrappleTarget_clicked")
 	entities.add_child(enemy)
+	
+	
 
 
 func _on_GrappleTarget_clicked(left_click: bool, target: GrappleTarget):
