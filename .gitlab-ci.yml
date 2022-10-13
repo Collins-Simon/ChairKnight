@@ -19,6 +19,8 @@ windows:
     artifacts:
         expire_in: 1 day
         untracked: true
+        paths:
+            - "$NAME-$CI_COMMIT_BRANCH/"
         name:
             "$NAME-$CI_COMMIT_BRANCH-windows"
 
@@ -34,6 +36,8 @@ linux:
     artifacts:
         expire_in: 1 day
         untracked: true
+        paths:
+            - "$NAME-$CI_COMMIT_BRANCH/"
         name:
             "$NAME-$CI_COMMIT_BRANCH-linux"
 
@@ -49,6 +53,8 @@ mac:
     artifacts:
         expire_in: 1 day
         untracked: true
+        paths:
+            - "$NAME-$CI_COMMIT_BRANCH/"
         name:
             "$NAME-$CI_COMMIT_BRANCH-mac"
 
@@ -65,5 +71,7 @@ web:
     artifacts:
         expire_in: 1 day
         untracked: true
+        paths:
+            - "$NAME-$CI_COMMIT_BRANCH/"
         name:
             "$NAME-$CI_COMMIT_BRANCH-web"
