@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Characters/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Characters/Enemies/EnemyBig.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Characters/Hitbox.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 45.0
@@ -15,8 +16,105 @@ radius = 75.0
 [sub_resource type="CircleShape2D" id=4]
 radius = 400.0
 
+[sub_resource type="CircleShape2D" id=5]
+radius = 120.0
+
+[sub_resource type="Animation" id=6]
+resource_name = "Attack"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack_finished"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Particles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0.0124224, 0.242236, 0.857143, 0.993789 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 0.84668, 0, 1, 1, 0, 0, 1, 1, 0.956863, 0.956863, 0 )
+
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0, 0.501136 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.873864 ), 0.677056, 0.677056, 0, 0, Vector2( 0.73913, 0.8875 ), -1.63788, -1.63788, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+resource_local_to_scene = true
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 550.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 100.0
+scale = 20.0
+scale_curve = SubResource( 11 )
+color_ramp = SubResource( 9 )
+
 [node name="EnemyBig" instance=ExtResource( 1 )]
-mass = 10.0
+mass = 3.0
 script = ExtResource( 2 )
 health = 3000
 
@@ -35,6 +133,32 @@ shape = SubResource( 3 )
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
 shape = SubResource( 4 )
 
+[node name="Hitbox" parent="." index="5" instance=ExtResource( 3 )]
+collision_mask = 8
+damage = 500
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource( 5 )
+disabled = true
+
+[node name="AttackTimer" type="Timer" parent="." index="6"]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
+anims/Attack = SubResource( 6 )
+anims/RESET = SubResource( 7 )
+
+[node name="Particles2D" type="Particles2D" parent="." index="8"]
+emitting = false
+amount = 30
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource( 12 )
+
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+
 [editable path="Hurtbox"]
 [editable path="GrappleArea"]
 [editable path="PlayerDetectionZone"]
+[editable path="Hitbox"]
