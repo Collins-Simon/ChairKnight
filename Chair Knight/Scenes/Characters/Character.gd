@@ -11,13 +11,16 @@ signal died(enemy)
 
 
 func _on_Hurtbox_area_entered(area: Hitbox) -> void:
-	var damage := min(area.receive_damage(), health)
-	#print(damage)
+	var max_damage = area.receive_damage()
+
+	# Apply knockback:
+	linear_velocity += area.global_position.direction_to(global_position) * max_damage
+
+	# Apply damage:
+	var damage := min(max_damage, health)
 	health -= damage
 	if health <= 0:
 		emit_signal("died", self)
-	else:
-		linear_velocity += area.global_position.direction_to(global_position) * damage
 
 
 func move(direction: Vector2, delta: float) -> void:
