@@ -4,6 +4,7 @@ extends Node2D
 var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
 var pillar_scene = preload("res://Scenes/Environment/Pillar.tscn")
 var bullet_scene = preload("res://Scenes/Equipment/Bullet.tscn")
+var explosion_scene = preload("res://Scenes/Equipment/Explosion.tscn")
 
 onready var player = $"%Player"
 onready var entities = $"%Entities"
@@ -31,8 +32,14 @@ func spawn_enemy(enemy_scene) -> void:
 	var enemy = enemy_scene.instance()
 	enemy.connect("clicked", self, "_on_GrappleBody_clicked")
 	enemy.connect("died", self, "_on_Enemy_died")
+	if enemy is EnemyExplosive: enemy.connect("explode", self, "create_explosion")
 	if enemy is EnemyRanged: enemy.connect("shoot_bullet", self, "shoot_bullet")
 	entities.add_child(enemy)
+
+func create_explosion(exploder: Node2D) -> void:
+	var explosion: Explosion = explosion_scene.instance()
+	explosion.global_position = exploder.global_position
+	entities.add_child(explosion)
 
 func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
 	var bullet: Bullet = bullet_scene.instance()

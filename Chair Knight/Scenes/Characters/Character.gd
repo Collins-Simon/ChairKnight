@@ -16,6 +16,8 @@ func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	health -= damage
 	if health <= 0:
 		emit_signal("died", self)
+	else:
+		linear_velocity += area.global_position.direction_to(global_position) * damage
 
 
 func move(direction: Vector2, delta: float) -> void:

@@ -15,8 +15,8 @@ func init(initial_position: Vector2, initial_velocity: Vector2 = Vector2.ZERO, f
 	enemy_bullet = from_enemy
 
 func _ready() -> void:
-	if enemy_bullet: hitbox.collision_mask = 0b10 # scan for player
-	else: hitbox.collision_mask = 0b100 # scan for enemies
+	if enemy_bullet: hitbox.collision_mask = 0b1000 # scan for player
+	else: hitbox.collision_mask = 0b10000 # scan for enemies
 
 func _physics_process(delta: float) -> void:
 	position += velocity * delta
