@@ -11,7 +11,7 @@ signal died(enemy)
 
 
 func _on_Hurtbox_area_entered(area: Hitbox) -> void:
-	var damage := min(area.damage, health)
+	var damage := min(area.receive_damage(), health)
 	#print(damage)
 	health -= damage
 	if health <= 0:

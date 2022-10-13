@@ -1,5 +1,5 @@
-extends Character
-class_name Enemy
+extends Enemy
+class_name EnemyExplosive
 
 
 onready var playerDetectionZone = $PlayerDetectionZone

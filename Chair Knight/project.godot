@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Bullet",
+"language": "GDScript",
+"path": "res://Scenes/Equipment/Bullet.gd"
+}, {
 "base": "GrappleBody",
 "class": "Character",
 "language": "GDScript",
@@ -17,7 +22,27 @@ _global_script_classes=[ {
 "base": "Character",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Scenes/Characters/Enemy.gd"
+"path": "res://Scenes/Characters/Enemies/Enemy.gd"
+}, {
+"base": "Enemy",
+"class": "EnemyBig",
+"language": "GDScript",
+"path": "res://Scenes/Characters/Enemies/EnemyBig.gd"
+}, {
+"base": "Enemy",
+"class": "EnemyExplosive",
+"language": "GDScript",
+"path": "res://Scenes/Characters/Enemies/EnemyExplosive.gd"
+}, {
+"base": "Enemy",
+"class": "EnemyRanged",
+"language": "GDScript",
+"path": "res://Scenes/Characters/Enemies/EnemyRanged.gd"
+}, {
+"base": "Enemy",
+"class": "EnemySmall",
+"language": "GDScript",
+"path": "res://Scenes/Characters/Enemies/EnemySmall.gd"
 }, {
 "base": "RigidBody2D",
 "class": "GrappleBody",
@@ -60,8 +85,13 @@ _global_script_classes=[ {
 "path": "res://Scenes/Menu/SubMenu.gd"
 } ]
 _global_script_class_icons={
+"Bullet": "",
 "Character": "",
 "Enemy": "",
+"EnemyBig": "",
+"EnemyExplosive": "",
+"EnemyRanged": "",
+"EnemySmall": "",
 "GrappleBody": "",
 "Hitbox": "",
 "MenuSystem": "",

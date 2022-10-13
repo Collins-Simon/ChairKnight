@@ -3,7 +3,7 @@ extends Node2D
 
 var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
 var pillar_scene = preload("res://Scenes/Environment/Pillar.tscn")
-var enemy_scene = preload("res://Scenes/Characters/Enemy.tscn")
+var bullet_scene = preload("res://Scenes/Equipment/Bullet.tscn")
 
 onready var player = $"%Player"
 onready var entities = $"%Entities"
@@ -17,11 +17,27 @@ func _ready() -> void:
 	pillar.connect("clicked", self, "_on_GrappleBody_clicked")
 	entities.add_child(pillar)
 
-	# Add an Enemy
-	var enemy: Enemy = enemy_scene.instance()
+	# Add some Enemies
+	for i in range(10):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemySmall.tscn"))
+	for i in range(3):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyBig.tscn"))
+	for i in range(2):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyExplosive.tscn"))
+	for i in range(3):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyRanged.tscn"))
+
+func spawn_enemy(enemy_scene) -> void:
+	var enemy = enemy_scene.instance()
 	enemy.connect("clicked", self, "_on_GrappleBody_clicked")
 	enemy.connect("died", self, "_on_Enemy_died")
+	if enemy is EnemyRanged: enemy.connect("shoot_bullet", self, "shoot_bullet")
 	entities.add_child(enemy)
+
+func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
+	var bullet: Bullet = bullet_scene.instance()
+	bullet.init(shooter.global_position, velocity, shooter is Enemy)
+	entities.add_child(bullet)
 
 func _on_Enemy_died(enemy: Enemy) -> void:
 	for rope in enemy.get_attached_ropes():
@@ -63,7 +79,6 @@ func ungrapple():
 	grapple_rope = null
 
 func destroy_rope(rope: Rope):
-	ropes.remove_child(rope)
 	rope.destroy()
 
 func attempt_rope_launch():
