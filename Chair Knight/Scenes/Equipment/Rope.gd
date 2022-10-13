@@ -9,8 +9,8 @@ var links = []
 var link_length = 50
 var joints = []
 
-var start_body : PhysicsBody2D = null
-var end_body : PhysicsBody2D = null
+var start_body: RigidBody2D = null
+var end_body: RigidBody2D = null
 
 onready var line = $Line2D
 
@@ -18,6 +18,13 @@ onready var line = $Line2D
 func init(start, end):
 	start_body = start
 	end_body = end
+	start.attach_rope(self)
+	end.attach_rope(self)
+
+func destroy():
+	start_body.detach_rope(self)
+	end_body.detach_rope(self)
+	self.queue_free()
 
 func _ready():
 	var start_pos = start_body.global_position

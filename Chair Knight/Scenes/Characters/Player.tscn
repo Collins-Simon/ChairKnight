@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Characters/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Images/icon.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Characters/Hurtbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Characters/Hitbox.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.0
 
 [node name="Player" type="RigidBody2D"]
+collision_layer = 2
 mode = 2
 mass = 2.0
 gravity_scale = 0.0
@@ -17,3 +20,13 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 3 )]
+collision_layer = 8
+
+[node name="Hitbox" parent="." instance=ExtResource( 4 )]
+collision_mask = 16
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="Hurtbox"]
