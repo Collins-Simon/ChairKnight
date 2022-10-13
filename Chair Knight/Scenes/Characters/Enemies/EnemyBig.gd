@@ -6,7 +6,7 @@ var charging_attack := false
 var attacking := false
 
 onready var playerDetectionZone = $PlayerDetectionZone
-onready var attack_timer = $AttackTimer
+onready var attack_delay_timer = $AttackDelayTimer
 onready var anim_player = $AnimationPlayer
 onready var particles = $Particles2D
 
@@ -21,17 +21,17 @@ func _physics_process(delta: float) -> void:
 		if global_position.distance_to(player_pos) <= 400:
 			if not charging_attack and not attacking:
 				charging_attack = true
-				attack_timer.start()
+				attack_delay_timer.start()
 
 		elif charging_attack and not attacking:
 			charging_attack = false
-			attack_timer.stop()
+			attack_delay_timer.stop()
 
 	if attacking: move(Vector2.ZERO, delta)
 	else: move(direction, delta)
 
 
-func _on_AttackTimer_timeout() -> void:
+func _on_AttackDelayTimer_timeout() -> void:
 	charging_attack = false
 	anim_player.play("Attack")
 	attacking = true

@@ -141,7 +141,7 @@ damage = 500
 shape = SubResource( 5 )
 disabled = true
 
-[node name="AttackTimer" type="Timer" parent="." index="6"]
+[node name="AttackDelayTimer" type="Timer" parent="." index="6"]
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
@@ -156,7 +156,7 @@ one_shot = true
 explosiveness = 0.8
 process_material = SubResource( 12 )
 
-[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="AttackDelayTimer" to="." method="_on_AttackDelayTimer_timeout"]
 
 [editable path="Hurtbox"]
 [editable path="GrappleArea"]
