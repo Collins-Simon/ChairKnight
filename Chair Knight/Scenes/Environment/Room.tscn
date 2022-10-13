@@ -1,118 +1,7 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
-[ext_resource path="res://Scenes/Characters/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Environment/Room.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=4]
-
-[sub_resource type="GDScript" id=16]
-resource_local_to_scene = true
-script/source = "extends Node2D
-
-
-var rope_scene = preload(\"res://Scenes/Equipment/Rope.tscn\")
-var pillar_scene = preload(\"res://Scenes/Environment/Pillar.tscn\")
-var bullet_scene = preload(\"res://Scenes/Equipment/Bullet.tscn\")
-var explosion_scene = preload(\"res://Scenes/Equipment/Explosion.tscn\")
-
-onready var player = $\"%Player\"
-onready var entities = $\"%Entities\"
-onready var ropes = $\"%Ropes\"
-onready var grapple_rope: Rope = null;
-onready var map = $Map
-
-
-func _ready() -> void:
-	# Add a Pillar
-	var pillar: Pillar = pillar_scene.instance()
-	pillar.connect(\"clicked\", self, \"_on_GrappleBody_clicked\")
-	entities.add_child(pillar)
-
-	# Add some Enemies
-	for i in range(10):
-		spawn_enemy(load(\"res://Scenes/Characters/Enemies/EnemySmall.tscn\"))
-	for i in range(3):
-		spawn_enemy(load(\"res://Scenes/Characters/Enemies/EnemyBig.tscn\"))
-	for i in range(2):
-		spawn_enemy(load(\"res://Scenes/Characters/Enemies/EnemyExplosive.tscn\"))
-	for i in range(3):
-		spawn_enemy(load(\"res://Scenes/Characters/Enemies/EnemyRanged.tscn\"))
-
-func spawn_enemy(enemy_scene) -> void:
-	var enemy = enemy_scene.instance()
-	enemy.connect(\"clicked\", self, \"_on_GrappleBody_clicked\")
-	enemy.connect(\"died\", self, \"_on_Enemy_died\")
-	if enemy is EnemyExplosive: enemy.connect(\"explode\", self, \"create_explosion\")
-	if enemy is EnemyRanged: enemy.connect(\"shoot_bullet\", self, \"shoot_bullet\")
-	entities.add_child(enemy)
-
-func create_explosion(exploder: Node2D) -> void:
-	var explosion: Explosion = explosion_scene.instance()
-	explosion.global_position = exploder.global_position
-	entities.add_child(explosion)
-
-func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
-	var bullet: Bullet = bullet_scene.instance()
-	bullet.init(shooter.global_position, velocity, shooter is Enemy)
-	entities.add_child(bullet)
-
-func _on_Enemy_died(enemy: Enemy) -> void:
-	var attached_ropes := enemy.get_attached_ropes()
-	for i in range(attached_ropes.size()-1, -1, -1):
-		var rope: Rope = attached_ropes[i]
-		if rope == grapple_rope: grapple_rope = null
-		destroy_rope(rope)
-	enemy.queue_free()
-
-func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
-	if left_click:
-		if grapple_rope != null: return
-		grapple_rope = rope_scene.instance()
-		grapple_rope.init(player, target)
-		ropes.add_child(grapple_rope)
-
-	else:
-		if grapple_rope == null: return
-		var end_body = grapple_rope.end_body
-		if end_body == target: return
-		if target.global_position.distance_squared_to(player.global_position) > 100_000: return
-		ungrapple()
-
-		var detached_rope = rope_scene.instance()
-		detached_rope.init(target, end_body)
-		ropes.add_child(detached_rope)
-
-func _unhandled_input(event):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_pressed():
-		ungrapple()
-
-	elif event is InputEventKey:
-		if event.scancode == KEY_R and event.is_pressed():
-			get_tree().reload_current_scene()
-		elif event.scancode == KEY_SPACE and event.is_pressed():
-			attempt_rope_launch()
-
-func ungrapple():
-	if grapple_rope == null: return
-	destroy_rope(grapple_rope)
-	grapple_rope = null
-
-func destroy_rope(rope: Rope):
-	rope.destroy()
-
-func _process(delta):
-	print(map)
-	for child in entities.get_children():
-		if not (child is Player or child is Pillar):
-			return
-	map.roomCleared()
-	pass
-
-func attempt_rope_launch():
-	if grapple_rope == null: return
-	var end_body = grapple_rope.end_body
-	ungrapple()
-	player.launch(end_body.global_position)
-"
+[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Environment/Room.gd" type="Script" id=2]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -153,10 +42,10 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 [sub_resource type="ConvexPolygonShape2D" id=14]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
-[sub_resource type="TileSet" id=15]
+[sub_resource type="TileSet" id=5]
 resource_local_to_scene = true
 0/name = "0x72_DungeonTilesetII_v1.4.png 0"
-0/texture = ExtResource( 4 )
+0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 16, 16, 16, 16 )
@@ -198,7 +87,7 @@ resource_local_to_scene = true
 } ]
 0/z_index = 0
 1/name = "0x72_DungeonTilesetII_v1.4.png 1"
-1/texture = ExtResource( 4 )
+1/texture = ExtResource( 1 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 32, 16, 16, 16 )
@@ -231,7 +120,7 @@ resource_local_to_scene = true
 } ]
 1/z_index = 0
 2/name = "0x72_DungeonTilesetII_v1.4.png 2"
-2/texture = ExtResource( 4 )
+2/texture = ExtResource( 1 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 48, 16, 16, 16 )
@@ -270,7 +159,7 @@ resource_local_to_scene = true
 } ]
 2/z_index = 0
 3/name = "0x72_DungeonTilesetII_v1.4.png 3"
-3/texture = ExtResource( 4 )
+3/texture = ExtResource( 1 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 16, 16, 16, 16 )
@@ -291,7 +180,7 @@ resource_local_to_scene = true
 } ]
 3/z_index = 0
 4/name = "0x72_DungeonTilesetII_v1.4.png 4"
-4/texture = ExtResource( 4 )
+4/texture = ExtResource( 1 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 32, 224, 32, 32 )
@@ -318,37 +207,15 @@ resource_local_to_scene = true
 } ]
 4/z_index = 0
 
-[node name="Game" type="Node2D"]
-position = Vector2( 10, -49 )
-script = SubResource( 16 )
-
-[node name="World" type="TileMap" parent="."]
+[node name="Map" type="TileMap"]
+position = Vector2( 0, 2 )
+scale = Vector2( 4, 4 )
+tile_set = SubResource( 5 )
+cell_size = Vector2( 16, 16 )
+show_collision = true
 format = 1
-
-[node name="Entities" type="YSort" parent="World"]
-unique_name_in_owner = true
-
-[node name="Player" parent="World/Entities" instance=ExtResource( 1 )]
-unique_name_in_owner = true
-position = Vector2( 372, 50 )
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="World/Entities/Player"]
-remote_path = NodePath("../../../../Camera2D")
-
-[node name="Ropes" type="Node" parent="World"]
-unique_name_in_owner = true
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 372, 50 )
-current = true
-smoothing_enabled = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="UI" type="Control" parent="CanvasLayer"]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="Map" parent="." instance=ExtResource( 2 )]
-position = Vector2( -341, -510 )
-tile_set = SubResource( 15 )
+tile_data = PoolIntArray( 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 4, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 19, 1, 0, 20, 1, 0, 21, 1, 0, 65536, 1, 0, 65537, 1, 0, 65538, 1, 0, 65539, 1, 0, 65540, 1, 0, 65541, 1, 0, 65542, 1, 0, 65543, 1, 0, 65544, 1, 0, 65545, 1, 0, 65548, 1, 0, 65549, 1, 0, 65550, 1, 0, 65551, 1, 0, 65552, 1, 0, 65553, 1, 0, 65554, 1, 0, 65555, 1, 0, 65556, 1, 0, 65557, 1, 0, 131072, 1, 0, 131073, 1, 0, 131092, 1, 0, 131093, 1, 0, 196608, 1, 0, 196609, 1, 0, 196628, 1, 0, 196629, 1, 0, 262144, 1, 0, 262145, 1, 0, 262164, 1, 0, 262165, 1, 0, 327680, 1, 0, 327681, 1, 0, 327700, 1, 0, 327701, 1, 0, 393216, 1, 0, 393217, 1, 0, 393236, 1, 0, 393237, 1, 0, 458752, 1, 0, 458753, 1, 0, 458772, 1, 0, 458773, 1, 0, 524288, 1, 0, 524289, 1, 0, 524308, 1, 0, 524309, 1, 0, 589824, 1, 0, 589825, 1, 0, 589844, 1, 0, 589845, 1, 0, 655360, 4, 0, 655380, 4, 0, 786432, 1, 0, 786433, 1, 0, 786452, 1, 0, 786453, 1, 0, 851968, 1, 0, 851969, 1, 0, 851988, 1, 0, 851989, 1, 0, 917504, 1, 0, 917505, 1, 0, 917524, 1, 0, 917525, 1, 0, 983040, 1, 0, 983041, 1, 0, 983060, 1, 0, 983061, 1, 0, 1048576, 1, 0, 1048577, 1, 0, 1048596, 1, 0, 1048597, 1, 0, 1114112, 1, 0, 1114113, 1, 0, 1114132, 1, 0, 1114133, 1, 0, 1179648, 1, 0, 1179649, 1, 0, 1179668, 1, 0, 1179669, 1, 0, 1245184, 1, 0, 1245185, 1, 0, 1245204, 1, 0, 1245205, 1, 0, 1310720, 1, 0, 1310721, 1, 0, 1310722, 1, 0, 1310723, 1, 0, 1310724, 1, 0, 1310725, 1, 0, 1310726, 1, 0, 1310727, 1, 0, 1310728, 1, 0, 1310729, 1, 0, 1310730, 4, 0, 1310732, 1, 0, 1310733, 1, 0, 1310734, 1, 0, 1310735, 1, 0, 1310736, 1, 0, 1310737, 1, 0, 1310738, 1, 0, 1310739, 1, 0, 1310740, 1, 0, 1310741, 1, 0, 1376256, 1, 0, 1376257, 1, 0, 1376258, 1, 0, 1376259, 1, 0, 1376260, 1, 0, 1376261, 1, 0, 1376262, 1, 0, 1376263, 1, 0, 1376264, 1, 0, 1376265, 1, 0, 1376268, 1, 0, 1376269, 1, 0, 1376270, 1, 0, 1376271, 1, 0, 1376272, 1, 0, 1376273, 1, 0, 1376274, 1, 0, 1376275, 1, 0, 1376276, 1, 0, 1376277, 1, 0 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}

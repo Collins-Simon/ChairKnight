@@ -9,6 +9,7 @@ var explosion_scene = preload("res://Scenes/Equipment/Explosion.tscn")
 onready var player = $"%Player"
 onready var entities = $"%Entities"
 onready var ropes = $"%Ropes"
+onready var map = $Map
 onready var grapple_rope: Rope = null;
 
 
@@ -89,6 +90,13 @@ func ungrapple():
 
 func destroy_rope(rope: Rope):
 	rope.destroy()
+
+func _process(delta):
+	for child in entities.get_children():
+		if not (child is Player or child is Pillar):
+			return
+	map.roomCleared()
+	pass
 
 func attempt_rope_launch():
 	if grapple_rope == null: return
