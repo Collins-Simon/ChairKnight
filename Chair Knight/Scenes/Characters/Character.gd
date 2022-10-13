@@ -14,7 +14,7 @@ func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	var max_damage = area.receive_damage()
 
 	# Apply knockback:
-	linear_velocity += area.global_position.direction_to(global_position) * max_damage
+	linear_velocity += area.global_position.direction_to(global_position) * (250 + max_damage / 2.0)
 
 	# Apply damage:
 	var damage := min(max_damage, health)

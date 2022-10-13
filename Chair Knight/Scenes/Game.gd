@@ -47,7 +47,9 @@ func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
 	entities.add_child(bullet)
 
 func _on_Enemy_died(enemy: Enemy) -> void:
-	for rope in enemy.get_attached_ropes():
+	var attached_ropes := enemy.get_attached_ropes()
+	for i in range(attached_ropes.size()-1, -1, -1):
+		var rope: Rope = attached_ropes[i]
 		if rope == grapple_rope: grapple_rope = null
 		destroy_rope(rope)
 	enemy.queue_free()
