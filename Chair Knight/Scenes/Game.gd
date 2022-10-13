@@ -14,12 +14,12 @@ onready var grapple_rope: Rope = null;
 func _ready() -> void:
 	# Add a Pillar
 	var pillar: Pillar = pillar_scene.instance()
-	pillar.connect("clicked", self, "_on_GrappleTarget_clicked")
+	pillar.connect("clicked", self, "_on_GrappleBody_clicked")
 	entities.add_child(pillar)
 
 	# Add an Enemy
 	var enemy: Enemy = enemy_scene.instance()
-	enemy.connect("clicked", self, "_on_GrappleTarget_clicked")
+	enemy.connect("clicked", self, "_on_GrappleBody_clicked")
 	enemy.connect("died", self, "_on_Enemy_died")
 	entities.add_child(enemy)
 
@@ -29,7 +29,7 @@ func _on_Enemy_died(enemy: Enemy) -> void:
 		destroy_rope(rope)
 	enemy.queue_free()
 
-func _on_GrappleTarget_clicked(left_click: bool, target: GrappleTarget):
+func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
 	if left_click:
 		if grapple_rope != null: return
 		grapple_rope = rope_scene.instance()

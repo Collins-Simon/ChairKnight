@@ -9,7 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "GrappleTarget",
+"base": "GrappleBody",
+"class": "Character",
+"language": "GDScript",
+"path": "res://Scenes/Characters/Character.gd"
+}, {
+"base": "Character",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Scenes/Characters/Enemy.gd"
@@ -18,11 +23,6 @@ _global_script_classes=[ {
 "class": "GrappleBody",
 "language": "GDScript",
 "path": "res://Scenes/Equipment/GrappleBody.gd"
-}, {
-"base": "GrappleBody",
-"class": "GrappleTarget",
-"language": "GDScript",
-"path": "res://Scenes/Equipment/GrappleTarget.gd"
 }, {
 "base": "Area2D",
 "class": "Hitbox",
@@ -39,12 +39,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Menu/OptionsMenu.gd"
 }, {
-"base": "GrappleTarget",
+"base": "GrappleBody",
 "class": "Pillar",
 "language": "GDScript",
 "path": "res://Scenes/Environment/Pillar.gd"
 }, {
-"base": "GrappleBody",
+"base": "Character",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Scenes/Characters/Player.gd"
@@ -60,9 +60,9 @@ _global_script_classes=[ {
 "path": "res://Scenes/Menu/SubMenu.gd"
 } ]
 _global_script_class_icons={
+"Character": "",
 "Enemy": "",
 "GrappleBody": "",
-"GrappleTarget": "",
 "Hitbox": "",
 "MenuSystem": "",
 "OptionsMenu": "",
