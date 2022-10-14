@@ -21,9 +21,9 @@ func _physics_process(delta: float) -> void:
 		var player_pos = playerDetectionZone.player.global_position
 		direction = global_position.direction_to(player_pos)
 		particles.process_material.direction = Vector3(direction.x, direction.y, 0.0)
-		
-		
-		
+
+
+
 		if global_position.distance_to(player_pos) <= 100:
 			if not charging_attack and not attacking:
 				charging_attack = true
@@ -35,17 +35,17 @@ func _physics_process(delta: float) -> void:
 
 	if attacking: move(Vector2.ZERO, delta)
 	else: move(direction, delta)
-	
+
 	#Animation handling
 	if(direction.length() > 0):
 		animation_mode.travel("Walk")
 	else: animation_mode.travel("Idle")
-		
+
 	if(direction.x > 0):
 		$Sprite.flip_h = false
 	else:
 		$Sprite.flip_h = true
-	
+
 
 func _on_AttackDelayTimer_timeout() -> void:
 	charging_attack = false
@@ -56,4 +56,4 @@ func _on_AttackDelayTimer_timeout() -> void:
 func attack_finished() -> void:
 	charging_attack = false
 	attacking = false
-	
+

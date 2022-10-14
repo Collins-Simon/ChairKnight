@@ -4,6 +4,7 @@ class_name GrappleBody
 
 var attached_ropes := []
 var prev_velocity := Vector2.ZERO
+var destroyed := false
 
 signal clicked(left_click, target)
 signal destroyed(body)
