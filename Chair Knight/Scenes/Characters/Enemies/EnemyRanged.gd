@@ -2,13 +2,15 @@ extends Enemy
 class_name EnemyRanged
 
 
-var ready_to_shoot := true
+var ready_to_shoot := false
 
 onready var playerDetectionZone = $PlayerDetectionZone
 onready var shoot_timer = $ShootTimer
 
 signal shoot_bullet(shooter, velocity)
 
+func _ready() -> void:
+	shoot_timer.start()
 
 func _physics_process(delta: float) -> void:
 	var direction := Vector2.ZERO

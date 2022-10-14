@@ -24,4 +24,4 @@ func _physics_process(delta: float) -> void:
 
 func explode():
 	emit_signal("explode", self)
-	emit_signal("died", self)
+	emit_signal("destroyed", self)

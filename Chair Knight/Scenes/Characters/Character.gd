@@ -7,8 +7,6 @@ export(float) var idle_friction = 1000
 export(float) var dampening_factor = 0.95
 export(int) var health = 1000
 
-signal died(enemy)
-
 
 func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	var max_damage = area.receive_damage()
@@ -20,7 +18,7 @@ func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	var damage := min(max_damage, health)
 	health -= damage
 	if health <= 0:
-		emit_signal("died", self)
+		emit_signal("destroyed", self)
 
 
 func move(direction: Vector2, delta: float) -> void:
