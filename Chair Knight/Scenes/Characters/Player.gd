@@ -3,7 +3,7 @@ class_name Player
 
 
 onready var hitbox = $Hitbox
-
+onready var currentRoom = null
 
 func _physics_process(delta: float) -> void:
 	var input_vector := Vector2.ZERO

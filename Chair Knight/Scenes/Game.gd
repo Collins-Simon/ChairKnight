@@ -6,19 +6,29 @@ var pillar_scene = preload("res://Scenes/Environment/Pillar.tscn")
 var bullet_scene = preload("res://Scenes/Equipment/Bullet.tscn")
 var explosion_scene = preload("res://Scenes/Equipment/Explosion.tscn")
 var bomb_scene = preload("res://Scenes/Environment/Bomb.tscn")
+var room_scene = preload("res://Scenes/Environment/Room.tscn")
 
 onready var player = $"%Player"
 onready var entities = $"%Entities"
 onready var ropes = $"%Ropes"
-onready var map = $Map
+onready var world = $World
 onready var grapple_rope: Rope = null;
+onready var createdRooms = []
+onready var visitedRooms = []
 
 
 func _ready() -> void:
 	# Add a Pillar
+	var start = generateRoom([0, 0])
+	player.currentRoom = start
+	player.currentRoom.coords = [0, 0]
+	createdRooms.append(start)
+	visitedRooms.append(start)
 	entered_new_room(1, 10, 3, 2, 3, 2)
 
 func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numBomb):
+	visitedRooms.append(player.currentRoom)
+	player.currentRoom.closeDoors()
 	# Add a Pillar
 	for i in range(numPillar):
 		spawn_pillar()
@@ -38,7 +48,7 @@ func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numB
 func randomEligibleRoomSpot():
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
-	return([rng.randf_range(map.position[0] + 128, map.position[0] + 1280), rng.randf_range(map.position[1] + 128, map.position[1] + 1280)])
+	return([rng.randf_range(player.currentRoom.position[0] + 128, player.currentRoom.position[0] + 1280), rng.randf_range(player.currentRoom.position[1] + 128, player.currentRoom.position[1] + 1280)])
 
 func spawn_enemy(enemy_scene) -> void:
 	var enemy = enemy_scene.instance()
@@ -84,7 +94,7 @@ func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
 		if child is Enemy and child != body:
 			room_cleared = false
 			break
-	if room_cleared: map.roomCleared()
+	if room_cleared: player.currentRoom.roomCleared()
 
 	var attached_ropes := body.get_attached_ropes()
 	for i in range(attached_ropes.size()-1, -1, -1):
@@ -134,3 +144,29 @@ func attempt_rope_launch():
 	var end_body = grapple_rope.end_body
 	ungrapple()
 	player.launch(end_body.global_position)
+
+func noCurrentRoom(coords):
+	for room in createdRooms:
+		if room.coords == coords:
+			return false
+	return true
+
+func generateRoom(coords):
+	var room = room_scene.instance()
+	room.coords = coords
+	room.position = Vector2(coords[0]*3008, coords[1]*3008)
+	room.doorsOpened()
+	world.add_child(room)
+	#For unclear reasons, world.add_child resets room coords. Setting again.
+	room.coords = coords
+	createdRooms.append(room)
+	return(room)
+
+func _process(delta):
+	#Create new room if player to right of current room
+	if(player.position[0] > player.currentRoom.position[0] + 2304):
+		#Check no existing room to right
+		if(noCurrentRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])):
+			var room = generateRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])
+			player.currentRoom = room
+
