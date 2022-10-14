@@ -65,6 +65,7 @@ func noCurrentRoom(coords):
 func generateRoom(coords):
 	var room = room_scene.instance()
 	room.coords = coords
+	room.addObstacles()
 	room.position = Vector2(coords[0]*2880, coords[1]*2880)
 	room.doorsOpened()
 	world.add_child(room)

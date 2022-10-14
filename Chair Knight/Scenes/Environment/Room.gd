@@ -28,6 +28,22 @@ func closeDoors():
 	set_cell(10, 1, 6)
 	set_cell(10, 20, 4)
 	set_cell(10, 21, 6)
+	
+func placeAll(coordsSet):
+	for coords in coordsSet:
+		set_cell(coords[0], coords[1], coords[2])
+	
+func addObstacles():
+	var version = rand_range(0, 4)
+	print(version)
+	if(version <= 2.5):
+		placeAll([[2,2,1],[2,3,1],[3,2,1],[19,19,1],[18,19,1],[19,18,1],[2,19,1],[3,19,1],[2,18,1],[19,2,1],[19,3,1],[18,2,1]])
+	if(version <=1):
+		placeAll([[8, 8, 1],[12,12,1],[8,12,1],[12,8,1]])
+	elif(version <=2):
+		placeAll([[7,10,1],[12,4,1],[14,11,1],[3,12,1]])
+	elif(version <=3):
+		placeAll([[5,5,1],[5,8,1],[5,11,1],[5,14,1],[5,17,1],[8,5,1],[11,5,1],[14,5,1],[17,5,1],[17,8,1],[17,11,1],[17,14,1],[17,17,1],[14,17,1],[11,17,1],[8,17,1]])
 
 func createCorridors():
 	var corridor = load("res://Scenes/Environment/Corridor.tscn")
