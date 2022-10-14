@@ -19,8 +19,8 @@ func _physics_process(delta: float) -> void:
 	if playerDetectionZone.player_detected():
 		var player_pos = playerDetectionZone.player.global_position
 		direction = global_position.direction_to(player_pos)
-		
-		
+
+
 		if(!(charging_attack or attacking)):
 			if(direction.x > 0):
 				facing_right = true
@@ -28,8 +28,8 @@ func _physics_process(delta: float) -> void:
 			else:
 				facing_right = false
 				$Sprite.flip_h = true
-			
-			
+
+
 		if global_position.distance_to(player_pos) <= 400:
 			if not charging_attack and not attacking:
 				charging_attack = true
@@ -46,8 +46,8 @@ func _physics_process(delta: float) -> void:
 	if attacking: move(Vector2.ZERO, delta)
 	else: move(direction, delta)
 
-	
-		
+
+
 
 
 
