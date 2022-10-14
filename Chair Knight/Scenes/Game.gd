@@ -26,16 +26,16 @@ func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numB
 	player.currentRoom.closeDoors()
 
 	# Add a Pillar
-	world.spawn_entity(Entities.PILLAR, randomEligibleRoomSpot())
+	for i in range(numPillar): world.spawn_entity(Entities.PILLAR, randomEligibleRoomSpot())
 
 	# Add some Enemies
-	for i in range(10): world.spawn_entity(Entities.ENEMY_SMALL, randomEligibleRoomSpot())
-	for i in range(3): world.spawn_entity(Entities.ENEMY_BIG, randomEligibleRoomSpot())
-	for i in range(2): world.spawn_entity(Entities.ENEMY_EXPLOSIVE, randomEligibleRoomSpot())
-	for i in range(3): world.spawn_entity(Entities.ENEMY_RANGED, randomEligibleRoomSpot())
+	for i in range(numSmall): world.spawn_entity(Entities.ENEMY_SMALL, randomEligibleRoomSpot())
+	for i in range(numBig): world.spawn_entity(Entities.ENEMY_BIG, randomEligibleRoomSpot())
+	for i in range(numExplosive): world.spawn_entity(Entities.ENEMY_EXPLOSIVE, randomEligibleRoomSpot())
+	for i in range(numRanged): world.spawn_entity(Entities.ENEMY_RANGED, randomEligibleRoomSpot())
 
 	# Add some Bombs
-	for i in range(2): world.spawn_entity(Entities.BOMB, randomEligibleRoomSpot())
+	for i in range(numBomb): world.spawn_entity(Entities.BOMB, randomEligibleRoomSpot())
 
 
 func randomEligibleRoomSpot():
@@ -120,7 +120,7 @@ func _process(delta):
 	#Alternatively, if room not visited and in confines:
 	if(notAlreadyVisited(player.currentRoom.coords)):
 		if(player.position[0] > player.currentRoom.position[0]+128 and player.position[0] < player.currentRoom.position[0]+1280 and player.position[1] > player.currentRoom.position[1]+128 and player.position[1] < player.currentRoom.position[1]+1280):
-			entered_new_room(2, 18, 4, 3, 3, 3)
+			entered_new_room(rand_range(0, 10), rand_range(3, 30), rand_range(1, 10), rand_range(1, 10), rand_range(1,10), rand_range(1,10))
 
 func _on_World_room_cleared() -> void:
 	player.currentRoom.roomCleared()
