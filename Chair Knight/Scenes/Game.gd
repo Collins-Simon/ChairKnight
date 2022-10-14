@@ -62,6 +62,13 @@ func connect_grapple_body(body: GrappleBody) -> void:
 	body.connect("destroyed", self, "_on_GrappleBody_destroyed")
 
 func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
+	var room_cleared = true
+	for child in entities.get_children():
+		if child is Enemy and child != body:
+			room_cleared = false
+			break
+	if room_cleared: map.roomCleared()
+
 	var attached_ropes := body.get_attached_ropes()
 	for i in range(attached_ropes.size()-1, -1, -1):
 		var rope: Rope = attached_ropes[i]
@@ -104,13 +111,6 @@ func ungrapple():
 
 func destroy_rope(rope: Rope):
 	rope.destroy()
-
-func _process(delta):
-	for child in entities.get_children():
-		if not (child is Player or child is Pillar):
-			return
-	map.roomCleared()
-	pass
 
 func attempt_rope_launch():
 	if grapple_rope == null: return
