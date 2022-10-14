@@ -1,11 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/Characters/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Characters/Enemies/EnemyExplosive.gd" type="Script" id=2]
-
-[sub_resource type="StreamTexture" id=6]
-flags = 4
-load_path = "res://.import/icon.png-2eacc55a38331c0ecff8f120a4ee2e34.stex"
+[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.0
@@ -21,6 +18,7 @@ radius = 400.0
 
 [sub_resource type="Animation" id=5]
 resource_name = "Explode"
+loop = true
 tracks/0/type = "method"
 tracks/0/path = NodePath(".")
 tracks/0/interp = 1
@@ -48,6 +46,24 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=10]
+resource_name = "Idle"
+length = 0.8
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
 [sub_resource type="Animation" id=7]
 length = 0.001
 tracks/0/type = "value"
@@ -62,6 +78,88 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -8 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Walk"
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 7, 4, 5, 6, 4, 7 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.169309, 0.663838, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -8 ), Vector2( 8, -8 ), Vector2( 0, -8 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "Explode"
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachine" id=8]
+states/Explode/node = SubResource( 12 )
+states/Explode/position = Vector2( 466, 67 )
+states/Idle/node = SubResource( 13 )
+states/Idle/position = Vector2( 224, 67 )
+states/Walk/node = SubResource( 14 )
+states/Walk/position = Vector2( 308, 165 )
+transitions = [ "Idle", "Walk", SubResource( 15 ), "Walk", "Idle", SubResource( 16 ), "Idle", "Explode", SubResource( 17 ), "Walk", "Explode", SubResource( 18 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
 
 [node name="EnemyExplosive" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -69,7 +167,14 @@ max_speed = 1500.0
 acceleration = 750.0
 
 [node name="Sprite" parent="." index="0"]
-texture = SubResource( 6 )
+position = Vector2( -3.3, 0 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 3 )
+offset = Vector2( 0, -8 )
+hframes = 8
+frame = 1
+region_enabled = true
+region_rect = Rect2( 16, 256, 256, 64 )
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 1 )
@@ -85,7 +190,15 @@ shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
 anims/Explode = SubResource( 5 )
+anims/Idle = SubResource( 10 )
 anims/RESET = SubResource( 7 )
+anims/Walk = SubResource( 11 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="6"]
+tree_root = SubResource( 8 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 9 )
 
 [editable path="Hurtbox"]
 [editable path="GrappleArea"]
