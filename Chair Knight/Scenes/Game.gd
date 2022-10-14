@@ -39,8 +39,11 @@ func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numB
 
 
 func randomEligibleRoomSpot():
-	return Vector2(rand_range(player.currentRoom.position[0] + 128, player.currentRoom.position[0] + 1280),
+	var coords = Vector2(rand_range(player.currentRoom.position[0] + 128, player.currentRoom.position[0] + 1280),
 		rand_range(player.currentRoom.position[1] + 128, player.currentRoom.position[1] + 1280))
+	if(player.currentRoom.get_cell(int((coords[0]-player.currentRoom.position[0])/64), int((coords[1]-player.currentRoom.position[1])/64)) == 1):
+		return(randomEligibleRoomSpot())
+	return(coords)
 
 
 func _unhandled_input(event):
