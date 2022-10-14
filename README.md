@@ -43,4 +43,9 @@ classDiagram
     LoadingScene : +Control Loading
     LoadingScene : +ProgressBar Loading/bar
 
+    PauseMenu : -_unhandled_input(event)
+    PauseMenu : +set_paused(bool value)
+    PauseMenu : +change_scene(String path)
+    PauseMenu : quit()
+
 ```
