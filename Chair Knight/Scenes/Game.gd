@@ -27,6 +27,7 @@ func _ready() -> void:
 	entered_new_room(1, 10, 3, 2, 3, 2)
 
 func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numBomb):
+	print(player.currentRoom.coords)
 	visitedRooms.append(player.currentRoom)
 	player.currentRoom.closeDoors()
 	# Add a Pillar
@@ -164,6 +165,12 @@ func generateRoom(coords):
 	createdRooms.append(room)
 	return(room)
 
+func getRoom(coords):
+	var room = room_scene.instance()
+	for r in createdRooms:
+		if r.coords == coords:
+			return(r)
+
 func notAlreadyVisited(coords):
 	for room in visitedRooms:
 		if room.coords == coords:
@@ -178,30 +185,32 @@ func _process(delta):
 			var room = generateRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])
 			player.currentRoom = room
 		else:
-			player.currentRoom.coords = [player.currentRoom.coords[0]+1, player.currentRoom.coords[1]]
-	if(player.position[0] < player.currentRoom.position[0] - 896):
+			player.currentRoom = getRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])
+	if(player.position[0] < player.currentRoom.position[0] - 960):
 		#Check no existing room to left
 		if(noCurrentRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])):
 			var room = generateRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])
 			player.currentRoom = room
 		else:
-			player.currentRoom.coords = [player.currentRoom.coords[0]-1, player.currentRoom.coords[1]]
+			player.currentRoom = getRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])
 	if(player.position[1] > player.currentRoom.position[1] + 2304):
 		#Check no existing room below current
 		if(noCurrentRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])):
 			var room = generateRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])
 			player.currentRoom = room
 		else:
-			player.currentRoom.coords = [player.currentRoom.coords[0], player.currentRoom.coords[1]+1]
-	if(player.position[1] < player.currentRoom.position[1] - 896):
+			player.currentRoom = getRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])
+	if(player.position[1] < player.currentRoom.position[1] - 960):
 		#Check no existing room above current
 		if(noCurrentRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])):
 			var room = generateRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])
 			player.currentRoom = room
 		else:
-			player.currentRoom.coords = [player.currentRoom.coords[0], player.currentRoom.coords[1]-1]
-			
+			player.currentRoom = getRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])
+	
+	print(player.currentRoom.position)
 	#Alternatively, if room not visited and in confines:
 	if(notAlreadyVisited(player.currentRoom.coords)):
 		if(player.position[0] > player.currentRoom.position[0]+128 and player.position[0] < player.currentRoom.position[0]+1280 and player.position[1] > player.currentRoom.position[1]+128 and player.position[1] < player.currentRoom.position[1]+1280):
-			entered_new_room(2, 18, 4, 3, 3, 3)		
+			entered_new_room(2, 18, 4, 3, 3, 3)	
+
