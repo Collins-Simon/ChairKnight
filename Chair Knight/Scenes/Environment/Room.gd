@@ -35,7 +35,6 @@ func placeAll(coordsSet):
 
 func addObstacles():
 	var version = rand_range(0, 4)
-	print(version)
 	if(version <= 2.5):
 		placeAll([[2,2,1],[2,3,1],[3,2,1],[19,19,1],[18,19,1],[19,18,1],[2,19,1],[3,19,1],[2,18,1],[19,2,1],[19,3,1],[18,2,1]])
 	if(version <=1):
@@ -53,8 +52,7 @@ func createCorridors():
 		instance.position = Vector2(orientation[0],orientation[1])
 		instance.scale = Vector2(1, 1)
 		instance.rotation = deg2rad(orientation[2])
-		instance
-		add_child(instance)
+		call_deferred("add_child", instance)
 
 func roomCleared():
 	doorsOpened()
