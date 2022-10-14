@@ -28,6 +28,7 @@ func _ready():
 		if child is SubMenu:
 			child.visible = child == active_menu
 	active_menu.local_focus.grab_focus()
+	$CanvasLayer/Background.set_theme(theme)
 
 ## Change to current scene to the one located at path.
 ## The scene located at LOADING_SCENE_PATH will be loaded in the interim
