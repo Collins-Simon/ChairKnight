@@ -74,16 +74,6 @@ func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
 		var rope: Rope = attached_ropes[i]
 		if rope == grapple_rope: grapple_rope = null
 		destroy_rope(rope)
-<<<<<<< HEAD
-	enemy.queue_free()
-	for child in entities.get_children():
-		if ((child is EnemyBig or child is EnemySmall or child is EnemyExplosive or child is EnemyRanged) and child != enemy):
-			print(child)
-			return
-	map.roomCleared()
-=======
-	body.queue_free()
->>>>>>> bcce2e9ff1e55197b327b0f19581193843809d99
 
 func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
 	if left_click:
