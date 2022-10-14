@@ -16,36 +16,53 @@ onready var grapple_rope: Rope = null;
 
 func _ready() -> void:
 	# Add a Pillar
-	var pillar: Pillar = pillar_scene.instance()
-	pillar.connect("clicked", self, "_on_GrappleBody_clicked")
-	entities.add_child(pillar)
+	entered_new_room(1, 10, 3, 2, 3, 2)
 
+func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numBomb):
+	# Add a Pillar
+	for i in range(numPillar):
+		spawn_pillar()
 	# Add some Enemies
-	for i in range(10):
+	for i in range(numSmall):
 		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemySmall.tscn"))
-	for i in range(3):
+	for i in range(numBig):
 		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyBig.tscn"))
-	for i in range(2):
+	for i in range(numExplosive):
 		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyExplosive.tscn"))
-	for i in range(3):
+	for i in range(numRanged):
 		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyRanged.tscn"))
-
 	# Add a couple of Bombs
 	for i in range(2):
 		spawn_bomb()
+
+func randomEligibleRoomSpot():
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	return([rng.randf_range(map.position[0] + 128, map.position[0] + 1280), rng.randf_range(map.position[1] + 128, map.position[1] + 1280)])
 
 func spawn_enemy(enemy_scene) -> void:
 	var enemy = enemy_scene.instance()
 	connect_grapple_body(enemy)
 	if enemy is EnemyExplosive: enemy.connect("explode", self, "create_explosion")
 	if enemy is EnemyRanged: enemy.connect("shoot_bullet", self, "shoot_bullet")
+	var location = randomEligibleRoomSpot()
+	enemy.position = Vector2(location[0], location[1])
 	entities.add_child(enemy)
 
 func spawn_bomb() -> void:
 	var bomb = bomb_scene.instance()
 	connect_grapple_body(bomb)
 	bomb.connect("explode", self, "create_explosion")
+	var location = randomEligibleRoomSpot()
+	bomb.position = Vector2(location[0], location[1])
 	entities.add_child(bomb)
+	
+func spawn_pillar() -> void:
+	var pillar = pillar_scene.instance()
+	connect_grapple_body(pillar)
+	var location = randomEligibleRoomSpot()
+	pillar.position = Vector2(location[0], location[1])
+	entities.add_child(pillar)
 
 func create_explosion(exploder: Node2D) -> void:
 	var explosion: Explosion = explosion_scene.instance()
@@ -74,6 +91,7 @@ func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
 		var rope: Rope = attached_ropes[i]
 		if rope == grapple_rope: grapple_rope = null
 		destroy_rope(rope)
+	body.queue_free()
 
 func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
 	if left_click:

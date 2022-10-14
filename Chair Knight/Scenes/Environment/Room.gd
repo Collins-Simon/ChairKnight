@@ -5,7 +5,6 @@ extends TileMap
 # var a = 2
 # var b = "text"
 onready var enemyarr = []
-onready var corridors = [null, null, null, null]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

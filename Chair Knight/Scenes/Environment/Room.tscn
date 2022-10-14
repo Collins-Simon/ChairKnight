@@ -222,7 +222,7 @@ resource_local_to_scene = true
 5/z_index = 0
 
 [node name="Map" type="TileMap"]
-position = Vector2( 0, 2 )
+position = Vector2( 0, 3 )
 scale = Vector2( 4, 4 )
 z_index = -1
 tile_set = SubResource( 5 )
