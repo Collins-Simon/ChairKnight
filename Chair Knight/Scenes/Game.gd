@@ -103,6 +103,8 @@ func _unhandled_input(event):
 			get_tree().reload_current_scene()
 		elif event.scancode == KEY_SPACE and event.is_pressed():
 			attempt_rope_launch()
+		elif event.scancode == KEY_ESCAPE and event.is_pressed():
+			$CanvasLayer.add_child(load("res://Scenes/Menu/PauseMenu.tscn").instance())
 
 func ungrapple():
 	if grapple_rope == null: return
