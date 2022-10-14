@@ -3,8 +3,14 @@ class_name GrappleBody
 
 
 var attached_ropes := []
+var prev_velocity := Vector2.ZERO
 
 signal clicked(left_click, target)
+signal destroyed(body)
+
+
+func _physics_process(delta: float) -> void:
+	prev_velocity = linear_velocity
 
 
 func attach_rope(rope: Rope) -> void:

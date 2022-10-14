@@ -5,6 +5,7 @@ var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
 var pillar_scene = preload("res://Scenes/Environment/Pillar.tscn")
 var bullet_scene = preload("res://Scenes/Equipment/Bullet.tscn")
 var explosion_scene = preload("res://Scenes/Equipment/Explosion.tscn")
+var bomb_scene = preload("res://Scenes/Environment/Bomb.tscn")
 
 onready var player = $"%Player"
 onready var entities = $"%Entities"
@@ -29,13 +30,22 @@ func _ready() -> void:
 	for i in range(3):
 		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyRanged.tscn"))
 
+	# Add a couple of Bombs
+	for i in range(2):
+		spawn_bomb()
+
 func spawn_enemy(enemy_scene) -> void:
 	var enemy = enemy_scene.instance()
-	enemy.connect("clicked", self, "_on_GrappleBody_clicked")
-	enemy.connect("died", self, "_on_Enemy_died")
+	connect_grapple_body(enemy)
 	if enemy is EnemyExplosive: enemy.connect("explode", self, "create_explosion")
 	if enemy is EnemyRanged: enemy.connect("shoot_bullet", self, "shoot_bullet")
 	entities.add_child(enemy)
+
+func spawn_bomb() -> void:
+	var bomb = bomb_scene.instance()
+	connect_grapple_body(bomb)
+	bomb.connect("explode", self, "create_explosion")
+	entities.add_child(bomb)
 
 func create_explosion(exploder: Node2D) -> void:
 	var explosion: Explosion = explosion_scene.instance()
@@ -47,18 +57,33 @@ func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
 	bullet.init(shooter.global_position, velocity, shooter is Enemy)
 	entities.add_child(bullet)
 
-func _on_Enemy_died(enemy: Enemy) -> void:
-	var attached_ropes := enemy.get_attached_ropes()
+func connect_grapple_body(body: GrappleBody) -> void:
+	body.connect("clicked", self, "_on_GrappleBody_clicked")
+	body.connect("destroyed", self, "_on_GrappleBody_destroyed")
+
+func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
+	var room_cleared = true
+	for child in entities.get_children():
+		if child is Enemy and child != body:
+			room_cleared = false
+			break
+	if room_cleared: map.roomCleared()
+
+	var attached_ropes := body.get_attached_ropes()
 	for i in range(attached_ropes.size()-1, -1, -1):
 		var rope: Rope = attached_ropes[i]
 		if rope == grapple_rope: grapple_rope = null
 		destroy_rope(rope)
+<<<<<<< HEAD
 	enemy.queue_free()
 	for child in entities.get_children():
 		if ((child is EnemyBig or child is EnemySmall or child is EnemyExplosive or child is EnemyRanged) and child != enemy):
 			print(child)
 			return
 	map.roomCleared()
+=======
+	body.queue_free()
+>>>>>>> bcce2e9ff1e55197b327b0f19581193843809d99
 
 func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
 	if left_click:
