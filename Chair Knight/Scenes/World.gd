@@ -13,7 +13,7 @@ signal room_cleared
 
 
 # Spawns an entity defined by the given enum at the specified position.
-func spawn_entity(entity_enum: int, pos: Vector2 = Vector2.INF) -> void:
+func spawn_entity(entity_enum: int, pos: Vector2 = Vector2.INF, meta_data: Dictionary = {}) -> void:
 	# Create the entity:
 	var entity = Entities.get_scene(entity_enum).instance()
 
@@ -25,6 +25,7 @@ func spawn_entity(entity_enum: int, pos: Vector2 = Vector2.INF) -> void:
 	# Connect its signals:
 	if entity is GrappleBody:
 		connect_grapple_body(entity)
+		if meta_data.has("velocity"): entity.linear_velocity = meta_data.get("velocity")
 
 		if entity is Enemy:
 			if entity is EnemyExplosive: entity.connect("explode", self, "create_explosion")

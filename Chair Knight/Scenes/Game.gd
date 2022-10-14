@@ -54,6 +54,17 @@ func _unhandled_input(event):
 			player.grapple_launch()  # launch Player at grappled target with SPACE
 		elif event.scancode == KEY_ESCAPE and event.is_pressed():
 			$CanvasLayer.add_child(load("res://Scenes/Menu/PauseMenu.tscn").instance())
+		elif event.scancode == KEY_E and event.is_pressed():
+			# Calculate arguments for Bomb being thrown by Player:
+			var bomb_velocity: Vector2 = player.linear_velocity
+			if not bomb_velocity:
+				bomb_velocity = player.global_position.direction_to(get_global_mouse_position())
+			var bomb_direction := Vector2.ZERO.direction_to(bomb_velocity)
+			bomb_velocity += bomb_direction * 250
+			var bomb_pos = player.global_position + bomb_direction * 100
+			var bomb_meta = {}
+			bomb_meta["velocity"] = bomb_velocity
+			world.spawn_entity(Entities.BOMB, bomb_pos, bomb_meta)
 
 
 func noCurrentRoom(coords):
