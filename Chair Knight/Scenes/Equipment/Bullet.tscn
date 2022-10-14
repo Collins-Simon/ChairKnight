@@ -1,28 +1,78 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Characters/Hitbox.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Images/icon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Characters/Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Equipment/Bullet.gd" type="Script" id=4]
 
+[sub_resource type="Animation" id=2]
+resource_name = "Fly"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="ParticlesMaterial" id=1]
+flag_disable_z = true
+spread = 125.21
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 7.49
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 4.34
+
 [node name="Bullet" type="Node2D"]
+rotation = 2.10986
 script = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.3, 0.3 )
+modulate = Color( 0.941176, 0.352941, 0.352941, 1 )
+rotation = 6.28319
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 481.042, 80.7334, 13.9334, 16.5037 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 1 )]
+visible = false
 collision_mask = 8
 damage = 200
 
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+visible = false
+
 [node name="Hurtbox" parent="." instance=ExtResource( 3 )]
+visible = false
 collision_mask = 1
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+visible = false
 
 [node name="LifetimeTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Fly"
+anims/Fly = SubResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+modulate = Color( 0.941176, 0.352941, 0.352941, 1 )
+position = Vector2( 0, 11.533 )
+amount = 12
+randomness = 0.64
+local_coords = false
+process_material = SubResource( 1 )
 
 [connection signal="applied_damage" from="Hitbox" to="." method="_on_Hitbox_applied_damage"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_Hurtbox_body_entered"]
