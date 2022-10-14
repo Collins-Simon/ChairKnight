@@ -156,13 +156,19 @@ func noCurrentRoom(coords):
 func generateRoom(coords):
 	var room = room_scene.instance()
 	room.coords = coords
-	room.position = Vector2(coords[0]*3008, coords[1]*3008)
+	room.position = Vector2(coords[0]*2880, coords[1]*2880)
 	room.doorsOpened()
 	world.add_child(room)
 	#For unclear reasons, world.add_child resets room coords. Setting again.
 	room.coords = coords
 	createdRooms.append(room)
 	return(room)
+
+func notAlreadyVisited(coords):
+	for room in visitedRooms:
+		if room.coords == coords:
+			return false
+	return true
 
 func _process(delta):
 	#Create new room if player to right of current room
@@ -194,4 +200,8 @@ func _process(delta):
 			player.currentRoom = room
 		else:
 			player.currentRoom.coords = [player.currentRoom.coords[0], player.currentRoom.coords[1]-1]
-
+			
+	#Alternatively, if room not visited and in confines:
+	if(notAlreadyVisited(player.currentRoom.coords)):
+		if(player.position[0] > player.currentRoom.position[0]+128 and player.position[0] < player.currentRoom.position[0]+1280 and player.position[1] > player.currentRoom.position[1]+128 and player.position[1] < player.currentRoom.position[1]+1280):
+			entered_new_room(2, 18, 4, 3, 3, 3)		

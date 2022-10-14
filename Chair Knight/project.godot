@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Menu/OptionsMenu.gd"
 }, {
+"base": "SubMenu",
+"class": "PauseMenu",
+"language": "GDScript",
+"path": "res://Scenes/Menu/PauseMenu.gd"
+}, {
 "base": "GrappleBody",
 "class": "Pillar",
 "language": "GDScript",
@@ -108,6 +113,7 @@ _global_script_class_icons={
 "Hitbox": "",
 "MenuSystem": "",
 "OptionsMenu": "",
+"PauseMenu": "",
 "Pillar": "",
 "Player": "",
 "Rope": "",
