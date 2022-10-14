@@ -54,6 +54,11 @@ func _on_Enemy_died(enemy: Enemy) -> void:
 		if rope == grapple_rope: grapple_rope = null
 		destroy_rope(rope)
 	enemy.queue_free()
+	for child in entities.get_children():
+		if ((child is EnemyBig or child is EnemySmall or child is EnemyExplosive or child is EnemyRanged) and child != enemy):
+			print(child)
+			return
+	map.roomCleared()
 
 func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
 	if left_click:
@@ -90,13 +95,6 @@ func ungrapple():
 
 func destroy_rope(rope: Rope):
 	rope.destroy()
-
-func _process(delta):
-	for child in entities.get_children():
-		if not (child is Player or child is Pillar):
-			return
-	map.roomCleared()
-	pass
 
 func attempt_rope_launch():
 	if grapple_rope == null: return
