@@ -126,6 +126,10 @@ config/name="Chair Knight"
 run/main_scene="res://Scenes/Menu/MenuSystem.tscn"
 config/icon="res://Assets/Images/icon.png"
 
+[autoload]
+
+Entities="*res://Scenes/Singletons/Entities.gd"
+
 [global]
 
 grav=false
