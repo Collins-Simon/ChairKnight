@@ -7,12 +7,16 @@ var velocity := Vector2.ZERO
 
 onready var hitbox = $Hitbox
 onready var lifetime_timer = $LifetimeTimer
+onready var blood = $Particles2D
 
 
 func init(initial_position: Vector2, initial_velocity: Vector2 = Vector2.ZERO, from_enemy: bool = true) -> void:
+
+	initial_position.y += 40
 	global_position = initial_position
 	velocity = initial_velocity
 	enemy_bullet = from_enemy
+
 
 func _ready() -> void:
 	if enemy_bullet: hitbox.collision_mask = 0b1000 # scan for player
