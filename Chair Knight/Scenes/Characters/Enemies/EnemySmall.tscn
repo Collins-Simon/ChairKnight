@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scenes/Characters/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Characters/Enemies/EnemySmall.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Characters/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 15.0
@@ -22,6 +23,7 @@ radius = 60.0
 [sub_resource type="Animation" id=6]
 resource_name = "Attack"
 length = 0.5
+loop = true
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hitbox/CollisionShape2D:disabled")
@@ -61,6 +63,36 @@ tracks/2/keys = {
 "method": "attack_finished"
 } ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 239, 240, 239 ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "Idle_E"
+length = 0.8
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 232, 233, 234, 233 ]
+}
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -87,6 +119,24 @@ tracks/1/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ false ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "Walk"
+length = 1.2
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 239, 237, 238, 239, 237, 238 ]
 }
 
 [sub_resource type="Gradient" id=8]
@@ -117,6 +167,42 @@ scale = 10.0
 scale_curve = SubResource( 11 )
 color_ramp = SubResource( 9 )
 
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "Attack"
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "Idle_E"
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id=29]
+states/Attack/node = SubResource( 20 )
+states/Attack/position = Vector2( 484, 83 )
+states/Idle/node = SubResource( 21 )
+states/Idle/position = Vector2( 252, 83 )
+states/Walk/node = SubResource( 22 )
+states/Walk/position = Vector2( 378, 196 )
+transitions = [ "Idle", "Walk", SubResource( 23 ), "Idle", "Attack", SubResource( 24 ), "Walk", "Attack", SubResource( 25 ), "Walk", "Idle", SubResource( 26 ), "Attack", "Idle", SubResource( 27 ), "Attack", "Walk", SubResource( 28 ) ]
+start_node = "Idle"
+graph_offset = Vector2( -11, 9 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
+
 [node name="EnemySmall" instance=ExtResource( 1 )]
 collision_mask = 5
 mass = 0.1
@@ -125,7 +211,12 @@ max_speed = 1500.0
 acceleration = 750.0
 
 [node name="Sprite" parent="." index="0"]
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( 0, -12.953 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 4 )
+hframes = 32
+vframes = 16
+frame = 234
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 1 )
@@ -153,7 +244,9 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="7"]
 anims/Attack = SubResource( 6 )
+anims/Idle_E = SubResource( 18 )
 anims/RESET = SubResource( 7 )
+anims/Walk = SubResource( 19 )
 
 [node name="Particles2D" type="Particles2D" parent="." index="8"]
 emitting = false
@@ -162,6 +255,12 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 0.8
 process_material = SubResource( 12 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="9"]
+tree_root = SubResource( 29 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 16 )
 
 [connection signal="timeout" from="AttackDelayTimer" to="." method="_on_AttackDelayTimer_timeout"]
 

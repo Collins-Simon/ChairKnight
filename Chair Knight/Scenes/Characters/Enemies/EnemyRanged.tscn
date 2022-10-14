@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scenes/Characters/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Characters/Enemies/EnemyRanged.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.0
@@ -15,26 +16,176 @@ radius = 50.0
 [sub_resource type="CircleShape2D" id=4]
 radius = 400.0
 
+[sub_resource type="Animation" id=5]
+resource_name = "Idle"
+length = 0.8
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 1 ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Shoot"
+length = 0.8
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.416334 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_shoot"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Walk"
+length = 0.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 7 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "Shoot"
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "Walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id=7]
+states/Idle/node = SubResource( 10 )
+states/Idle/position = Vector2( 197, 61 )
+states/Shoot/node = SubResource( 11 )
+states/Shoot/position = Vector2( 521, 61 )
+states/Walk/node = SubResource( 12 )
+states/Walk/position = Vector2( 350, 160 )
+transitions = [ "Idle", "Walk", SubResource( 13 ), "Walk", "Idle", SubResource( 14 ), "Idle", "Shoot", SubResource( 15 ), "Walk", "Shoot", SubResource( 16 ), "Shoot", "Idle", SubResource( 17 ), "Shoot", "Walk", SubResource( 18 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
+
 [node name="EnemyRanged" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 max_speed = 500.0
 acceleration = 250.0
 idle_friction = 100.0
 
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+hframes = 8
+frame = 3
+region_enabled = true
+region_rect = Rect2( 16, 360, 256, 48 )
+
 [node name="CollisionShape2D" parent="." index="1"]
+visible = false
 shape = SubResource( 1 )
 
+[node name="Hurtbox" parent="." index="2"]
+visible = false
+
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
+visible = false
 shape = SubResource( 2 )
 
+[node name="GrappleArea" parent="." index="3"]
+visible = false
+
 [node name="CollisionShape2D" parent="GrappleArea" index="0"]
+visible = false
 shape = SubResource( 3 )
 
+[node name="PlayerDetectionZone" parent="." index="4"]
+visible = false
+
 [node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+visible = false
 shape = SubResource( 4 )
 
 [node name="ShootTimer" type="Timer" parent="." index="5"]
-wait_time = 1.5
+wait_time = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="6"]
+anims/Idle = SubResource( 5 )
+anims/RESET = SubResource( 19 )
+anims/Shoot = SubResource( 9 )
+anims/Walk = SubResource( 6 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="7"]
+tree_root = SubResource( 7 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 8 )
 
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
 

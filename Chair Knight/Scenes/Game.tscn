@@ -1,31 +1,35 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Characters/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/World.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Characters/Enemies/EnemySmall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Game.gd" type="Script" id=3]
 
 [node name="Game" type="Node2D"]
-position = Vector2( 10, -49 )
 script = ExtResource( 3 )
 
-[node name="World" type="Node2D" parent="."]
-script = ExtResource( 2 )
+[node name="World" type="TileMap" parent="."]
+format = 1
 
 [node name="Entities" type="YSort" parent="World"]
 unique_name_in_owner = true
 
 [node name="Player" parent="World/Entities" instance=ExtResource( 1 )]
 unique_name_in_owner = true
-position = Vector2( 200, 200 )
+position = Vector2( 372, 50 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="World/Entities/Player"]
 remote_path = NodePath("../../../../Camera2D")
+
+[node name="EnemySmall" parent="World/Entities" instance=ExtResource( 2 )]
 
 [node name="Ropes" type="Node" parent="World"]
 unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 200, 200 )
+position = Vector2( 372, 50 )
 current = true
 smoothing_enabled = true
 
@@ -34,5 +38,3 @@ smoothing_enabled = true
 [node name="UI" type="Control" parent="CanvasLayer"]
 margin_right = 40.0
 margin_bottom = 40.0
-
-[connection signal="room_cleared" from="World" to="." method="_on_World_room_cleared"]

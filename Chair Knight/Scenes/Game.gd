@@ -1,126 +1,97 @@
 extends Node2D
 
 
-var room_scene = preload("res://Scenes/Environment/Room.tscn")
+var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
+var pillar_scene = preload("res://Scenes/Environment/Pillar.tscn")
+var bullet_scene = preload("res://Scenes/Equipment/Bullet.tscn")
+var explosion_scene = preload("res://Scenes/Equipment/Explosion.tscn")
 
 onready var player = $"%Player"
 onready var entities = $"%Entities"
 onready var ropes = $"%Ropes"
-onready var world = $World
-onready var createdRooms = []
-onready var visitedRooms = []
+onready var grapple_rope: Rope = null;
 
 
 func _ready() -> void:
 	# Add a Pillar
-	var start = generateRoom([0, 0])
-	player.currentRoom = start
-	player.currentRoom.coords = [0, 0]
-	createdRooms.append(start)
-	visitedRooms.append(start)
-	entered_new_room(1, 10, 3, 2, 3, 2)
-
-func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numBomb):
-	print(player.currentRoom.coords)
-	visitedRooms.append(player.currentRoom)
-	player.currentRoom.closeDoors()
-
-	# Add a Pillar
-	world.spawn_entity(Entities.PILLAR, randomEligibleRoomSpot())
+	var pillar: Pillar = pillar_scene.instance()
+	pillar.connect("clicked", self, "_on_GrappleBody_clicked")
+	entities.add_child(pillar)
 
 	# Add some Enemies
-	for i in range(10): world.spawn_entity(Entities.ENEMY_SMALL, randomEligibleRoomSpot())
-	for i in range(3): world.spawn_entity(Entities.ENEMY_BIG, randomEligibleRoomSpot())
-	for i in range(2): world.spawn_entity(Entities.ENEMY_EXPLOSIVE, randomEligibleRoomSpot())
-	for i in range(3): world.spawn_entity(Entities.ENEMY_RANGED, randomEligibleRoomSpot())
+	for i in range(10):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemySmall.tscn"))
+	for i in range(3):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyBig.tscn"))
+	for i in range(2):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyExplosive.tscn"))
+	for i in range(2):
+		spawn_enemy(load("res://Scenes/Characters/Enemies/EnemyRanged.tscn"))
 
-	# Add some Bombs
-	for i in range(2): world.spawn_entity(Entities.BOMB, randomEligibleRoomSpot())
+func spawn_enemy(enemy_scene) -> void:
+	var enemy = enemy_scene.instance()
+	enemy.connect("clicked", self, "_on_GrappleBody_clicked")
+	enemy.connect("died", self, "_on_Enemy_died")
+	if enemy is EnemyExplosive: enemy.connect("explode", self, "create_explosion")
+	if enemy is EnemyRanged: enemy.connect("shoot_bullet", self, "shoot_bullet")
+	entities.add_child(enemy)
 
+func create_explosion(exploder: Node2D) -> void:
+	var explosion: Explosion = explosion_scene.instance()
+	explosion.global_position = exploder.global_position
+	entities.add_child(explosion)
 
-func randomEligibleRoomSpot():
-	return Vector2(rand_range(player.currentRoom.position[0] + 128, player.currentRoom.position[0] + 1280),
-		rand_range(player.currentRoom.position[1] + 128, player.currentRoom.position[1] + 1280))
+func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
+	var bullet: Bullet = bullet_scene.instance()
+	bullet.init(shooter.global_position, velocity, shooter is Enemy)
+	entities.add_child(bullet)
 
+func _on_Enemy_died(enemy: Enemy) -> void:
+	var attached_ropes := enemy.get_attached_ropes()
+	for i in range(attached_ropes.size()-1, -1, -1):
+		var rope: Rope = attached_ropes[i]
+		if rope == grapple_rope: grapple_rope = null
+		destroy_rope(rope)
+	enemy.queue_free()
+
+func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
+	if left_click:
+		if grapple_rope != null: return
+		grapple_rope = rope_scene.instance()
+		grapple_rope.init(player, target)
+		ropes.add_child(grapple_rope)
+
+	else:
+		if grapple_rope == null: return
+		var end_body = grapple_rope.end_body
+		if end_body == target: return
+		if target.global_position.distance_squared_to(player.global_position) > 100_000: return
+		ungrapple()
+
+		var detached_rope = rope_scene.instance()
+		detached_rope.init(target, end_body)
+		ropes.add_child(detached_rope)
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_pressed():
-		world.ungrapple()
+		ungrapple()
 
 	elif event is InputEventKey:
 		if event.scancode == KEY_R and event.is_pressed():
 			get_tree().reload_current_scene()
 		elif event.scancode == KEY_SPACE and event.is_pressed():
-			world.attempt_rope_launch()
-		elif event.scancode == KEY_ESCAPE and event.is_pressed():
-			$CanvasLayer.add_child(load("res://Scenes/Menu/PauseMenu.tscn").instance())
+			attempt_rope_launch()
 
+func ungrapple():
+	if grapple_rope == null: return
+	destroy_rope(grapple_rope)
+	grapple_rope = null
 
-func noCurrentRoom(coords):
-	for room in createdRooms:
-		if room.coords == coords:
-			return false
-	return true
+func destroy_rope(rope: Rope):
+	rope.destroy()
 
-func generateRoom(coords):
-	var room = room_scene.instance()
-	room.coords = coords
-	room.position = Vector2(coords[0]*2880, coords[1]*2880)
-	room.doorsOpened()
-	world.add_child(room)
-	#For unclear reasons, world.add_child resets room coords. Setting again.
-	room.coords = coords
-	createdRooms.append(room)
-	return(room)
-
-func getRoom(coords):
-	var room = room_scene.instance()
-	for r in createdRooms:
-		if r.coords == coords:
-			return(r)
-
-func notAlreadyVisited(coords):
-	for room in visitedRooms:
-		if room.coords == coords:
-			return false
-	return true
-
-func _process(delta):
-	#Create new room if player to right of current room
-	if(player.position[0] > player.currentRoom.position[0] + 2304):
-		#Check no existing room to right
-		if(noCurrentRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])):
-			var room = generateRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])
-			player.currentRoom = room
-		else:
-			player.currentRoom = getRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])
-	if(player.position[0] < player.currentRoom.position[0] - 960):
-		#Check no existing room to left
-		if(noCurrentRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])):
-			var room = generateRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])
-			player.currentRoom = room
-		else:
-			player.currentRoom = getRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])
-	if(player.position[1] > player.currentRoom.position[1] + 2304):
-		#Check no existing room below current
-		if(noCurrentRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])):
-			var room = generateRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])
-			player.currentRoom = room
-		else:
-			player.currentRoom = getRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])
-	if(player.position[1] < player.currentRoom.position[1] - 960):
-		#Check no existing room above current
-		if(noCurrentRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])):
-			var room = generateRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])
-			player.currentRoom = room
-		else:
-			player.currentRoom = getRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])
-
-	#print(player.currentRoom.position)
-	#Alternatively, if room not visited and in confines:
-	if(notAlreadyVisited(player.currentRoom.coords)):
-		if(player.position[0] > player.currentRoom.position[0]+128 and player.position[0] < player.currentRoom.position[0]+1280 and player.position[1] > player.currentRoom.position[1]+128 and player.position[1] < player.currentRoom.position[1]+1280):
-			entered_new_room(2, 18, 4, 3, 3, 3)
-
-func _on_World_room_cleared() -> void:
-	player.currentRoom.roomCleared()
+func attempt_rope_launch():
+	if grapple_rope == null: return
+	var end_body = grapple_rope.end_body
+	ungrapple()
+	player.launch(end_body.global_position)
