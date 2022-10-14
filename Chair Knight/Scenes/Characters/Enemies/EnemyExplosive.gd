@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	if(direction.length() > 0):
 		animation_mode.travel("Walk")
 	else: animation_mode.travel("Idle")
-		
+
 	if(direction.x > 0):
 		$Sprite.flip_h = false
 	else:

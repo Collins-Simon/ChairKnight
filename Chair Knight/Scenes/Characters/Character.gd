@@ -9,6 +9,7 @@ export(int) var health = 1000
 
 
 func _on_Hurtbox_area_entered(area: Hitbox) -> void:
+	if destroyed: return
 	var max_damage = area.receive_damage()
 
 	# Apply knockback:
@@ -18,6 +19,7 @@ func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	var damage := min(max_damage, health)
 	health -= damage
 	if health <= 0:
+		destroyed = true
 		emit_signal("destroyed", self)
 
 

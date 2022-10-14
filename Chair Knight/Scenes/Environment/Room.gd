@@ -28,11 +28,11 @@ func closeDoors():
 	set_cell(10, 1, 6)
 	set_cell(10, 20, 4)
 	set_cell(10, 21, 6)
-	
+
 func placeAll(coordsSet):
 	for coords in coordsSet:
 		set_cell(coords[0], coords[1], coords[2])
-	
+
 func addObstacles():
 	var version = rand_range(0, 4)
 	if(version <= 2.5):

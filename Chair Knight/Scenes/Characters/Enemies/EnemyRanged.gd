@@ -22,12 +22,12 @@ var direction
 
 func _physics_process(delta: float) -> void:
 
-	
+
 	direction = Vector2.ZERO
 	if playerDetectionZone.player_detected():
 		direction = global_position.direction_to(playerDetectionZone.player.global_position)
-		
-		
+
+
 		if ready_to_shoot:
 			ready_to_shoot = false
 
@@ -35,18 +35,18 @@ func _physics_process(delta: float) -> void:
 			animation_mode.travel("Shoot")
 	else:
 		animation_mode.travel("Idle")
-		
+
 	move(direction, delta)
-	
-	
-	
+
+
+
 	if(ready_to_shoot):
 		if(direction.length() > 0):
 			animation_mode.travel("Walk")
-		else: 
+		else:
 			animation_mode.travel("Idle")
 
-	
+
 	if(direction.x > 0):
 		$Sprite.flip_h = false
 	else:
@@ -63,5 +63,5 @@ func _shoot() -> void:
 
 func _on_ShootTimer_timeout() -> void:
 	ready_to_shoot = true
-	
+
 
