@@ -169,19 +169,27 @@ func _process(delta):
 		if(noCurrentRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])):
 			var room = generateRoom([player.currentRoom.coords[0]+1, player.currentRoom.coords[1]])
 			player.currentRoom = room
+		else:
+			player.currentRoom.coords = [player.currentRoom.coords[0]+1, player.currentRoom.coords[1]]
 	if(player.position[0] < player.currentRoom.position[0] - 896):
 		#Check no existing room to left
 		if(noCurrentRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])):
 			var room = generateRoom([player.currentRoom.coords[0]-1, player.currentRoom.coords[1]])
 			player.currentRoom = room
+		else:
+			player.currentRoom.coords = [player.currentRoom.coords[0]-1, player.currentRoom.coords[1]]
 	if(player.position[1] > player.currentRoom.position[1] + 2304):
 		#Check no existing room below current
 		if(noCurrentRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])):
 			var room = generateRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]+1])
 			player.currentRoom = room
+		else:
+			player.currentRoom.coords = [player.currentRoom.coords[0], player.currentRoom.coords[1]+1]
 	if(player.position[1] < player.currentRoom.position[1] - 896):
 		#Check no existing room above current
 		if(noCurrentRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])):
 			var room = generateRoom([player.currentRoom.coords[0], player.currentRoom.coords[1]-1])
 			player.currentRoom = room
+		else:
+			player.currentRoom.coords = [player.currentRoom.coords[0], player.currentRoom.coords[1]-1]
 
