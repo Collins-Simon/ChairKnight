@@ -61,7 +61,7 @@ func connect_grapple_body(body: GrappleBody) -> void:
 func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
 	# If left clicked, let the Player grapple to the target.
 	if left_click:
-		if player.is_grappled(): return
+		if player.is_grappled() or player.destroyed: return
 		player.grapple(target)
 		ropes.add_child(player.grapple_rope)
 

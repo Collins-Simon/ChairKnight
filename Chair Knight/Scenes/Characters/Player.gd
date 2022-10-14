@@ -12,12 +12,11 @@ onready var death_tween = $DeathTween
 
 
 func _physics_process(delta: float) -> void:
-	if destroyed: return
-
 	# Move the Player according to the current input:
 	var input_vector := Vector2.ZERO
-	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	if not destroyed:
+		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+		input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	move(input_vector, delta)
 
 	# Make the damage of the Player's hitbox proportional its speed:
@@ -55,5 +54,7 @@ func launch(target_pos : Vector2) -> void:
 
 
 func _on_Player_destroyed(body) -> void:
+	$CollisionShape2D.disabled = true
+	hitbox.monitorable = false
 	death_tween.interpolate_property(sprite, "material:shader_param/value", 1.0, 0.0, 1)
 	death_tween.start()

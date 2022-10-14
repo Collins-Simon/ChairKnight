@@ -2,6 +2,7 @@ extends Node2D
 
 
 var room_scene = preload("res://Scenes/Environment/Room.tscn")
+var player_dead := false
 
 onready var player = $"%Player"
 onready var entities = $"%Entities"
@@ -21,7 +22,7 @@ func _ready() -> void:
 	entered_new_room(1, 10, 3, 2, 3, 2)
 
 func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numBomb):
-	print(player.currentRoom.coords)
+	#print(player.currentRoom.coords)
 	visitedRooms.append(player.currentRoom)
 	player.currentRoom.closeDoors()
 
@@ -51,13 +52,13 @@ func _unhandled_input(event):
 		player.ungrapple() # ungrapple when left mouse button is released
 
 	elif event is InputEventKey:
-		if event.scancode == KEY_R and event.is_pressed():
-			get_tree().reload_current_scene() # reload scene with R
+		if event.scancode == KEY_BACKSPACE and event.is_pressed():
+			get_tree().reload_current_scene() # reload scene with BACKSPACE
 		elif event.scancode == KEY_SPACE and event.is_pressed():
 			player.grapple_launch()  # launch Player at grappled target with SPACE
 		elif event.scancode == KEY_ESCAPE and event.is_pressed():
 			$CanvasLayer.add_child(load("res://Scenes/Menu/PauseMenu.tscn").instance())
-		elif event.scancode == KEY_E and event.is_pressed():
+		elif event.scancode == KEY_E and event.is_pressed() and not player_dead:
 			# Calculate arguments for Bomb being thrown by Player:
 			var bomb_velocity: Vector2 = player.linear_velocity
 			if not bomb_velocity:
@@ -139,3 +140,7 @@ func _process(delta):
 
 func _on_World_room_cleared() -> void:
 	player.currentRoom.roomCleared()
+
+
+func _on_Player_destroyed(body) -> void:
+	player_dead = true
