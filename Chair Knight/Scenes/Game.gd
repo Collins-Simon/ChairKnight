@@ -61,10 +61,8 @@ func _unhandled_input(event):
 		elif event.scancode == KEY_E and event.is_pressed() and not player_dead:
 			# Calculate arguments for Bomb being thrown by Player:
 			var bomb_velocity: Vector2 = player.linear_velocity
-			if not bomb_velocity:
-				bomb_velocity = player.global_position.direction_to(get_global_mouse_position())
-			var bomb_direction := Vector2.ZERO.direction_to(bomb_velocity)
-			bomb_velocity += bomb_direction * 250
+			var bomb_direction : Vector2 = player.global_position.direction_to(get_global_mouse_position())
+			bomb_velocity += bomb_direction * 500
 			var bomb_pos = player.global_position + bomb_direction * 100
 			var bomb_meta = {}
 			bomb_meta["velocity"] = bomb_velocity
