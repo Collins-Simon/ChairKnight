@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Characters/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Images/icon.png" type="Texture" id=2]
@@ -38,6 +38,12 @@ shader_param/noise_texture = SubResource( 5 )
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.0
 
+[sub_resource type="CircleShape2D" id=7]
+radius = 200.0
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 40.0
+
 [node name="Player" type="RigidBody2D"]
 collision_layer = 2
 mode = 2
@@ -61,8 +67,27 @@ collision_mask = 16
 
 [node name="DeathTween" type="Tween" parent="."]
 
+[node name="DropAttractionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropAttractionArea"]
+shape = SubResource( 7 )
+
+[node name="DropPickupArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropPickupArea"]
+shape = SubResource( 8 )
+
 [connection signal="destroyed" from="." to="." method="_on_Player_destroyed"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="area_entered" from="DropAttractionArea" to="." method="_on_DropAttractionArea_area_entered"]
+[connection signal="area_exited" from="DropAttractionArea" to="." method="_on_DropAttractionArea_area_exited"]
+[connection signal="area_entered" from="DropPickupArea" to="." method="_on_DropPickupArea_area_entered"]
 
 [editable path="Hurtbox"]
 [editable path="Hitbox"]
