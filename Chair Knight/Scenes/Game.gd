@@ -45,13 +45,13 @@ func randomEligibleRoomSpot():
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and not event.is_pressed():
-		player.ungrapple()
+		player.ungrapple() # ungrapple when left mouse button is released
 
 	elif event is InputEventKey:
 		if event.scancode == KEY_R and event.is_pressed():
-			get_tree().reload_current_scene()
+			get_tree().reload_current_scene() # reload scene with R
 		elif event.scancode == KEY_SPACE and event.is_pressed():
-			player.grapple_launch()
+			player.grapple_launch()  # launch Player at grappled target with SPACE
 		elif event.scancode == KEY_ESCAPE and event.is_pressed():
 			$CanvasLayer.add_child(load("res://Scenes/Menu/PauseMenu.tscn").instance())
 
