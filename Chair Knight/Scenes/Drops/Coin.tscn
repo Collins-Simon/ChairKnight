@@ -30,6 +30,7 @@ animations = [ {
 
 [node name="Coin" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+value = 1
 
 [node name="Sprite" parent="SpriteHolder" index="0"]
 visible = false

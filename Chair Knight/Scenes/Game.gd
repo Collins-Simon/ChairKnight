@@ -21,12 +21,13 @@ func _ready() -> void:
 	visitedRooms.append(start)
 	entered_new_room(1, 10, 3, 2, 3, 2)
 
+#Generates enemies, pillars, and bombs, at random locations across the current room, in desired numbers.
 func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numBomb):
 	#print(player.currentRoom.coords)
 	visitedRooms.append(player.currentRoom)
 	player.currentRoom.closeDoors()
 
-	# Add a Pillar
+	# Add pillars
 	for i in range(numPillar): world.spawn_entity(Entities.PILLAR, randomEligibleRoomSpot())
 
 	# Add some Enemies
@@ -38,7 +39,7 @@ func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numB
 	# Add some Bombs
 	for i in range(numBomb): world.spawn_entity(Entities.BOMB, randomEligibleRoomSpot())
 
-
+#Return a random eligible location to place an entity at; if space occupied, run recursively until valid spot found.
 func randomEligibleRoomSpot():
 	var coords = Vector2(rand_range(player.currentRoom.position[0] + 128, player.currentRoom.position[0] + 1280),
 		rand_range(player.currentRoom.position[1] + 128, player.currentRoom.position[1] + 1280))
@@ -68,13 +69,14 @@ func _unhandled_input(event):
 			bomb_meta["velocity"] = bomb_velocity
 			world.spawn_entity(Entities.BOMB, bomb_pos, bomb_meta)
 
-
+#Checks if a room has already been generated at specific coordinates.
 func noCurrentRoom(coords):
 	for room in createdRooms:
 		if room.coords == coords:
 			return false
 	return true
 
+#Creates a new room at the given coordinates.
 func generateRoom(coords):
 	var room = room_scene.instance()
 	room.coords = coords
@@ -82,23 +84,26 @@ func generateRoom(coords):
 	room.position = Vector2(coords[0]*2880, coords[1]*2880)
 	room.doorsOpened()
 	world.add_child(room)
-	#For unclear reasons, world.add_child resets room coords. Setting again.
+	#For unclear reasons, world.add_child resets room coords. Setting coords again.
 	room.coords = coords
 	createdRooms.append(room)
 	return(room)
 
+#Finds and returns the room with the given set of coordinates.
 func getRoom(coords):
 	var room = room_scene.instance()
 	for r in createdRooms:
 		if r.coords == coords:
 			return(r)
 
+#Checks if player has already entered a given room.
 func notAlreadyVisited(coords):
 	for room in visitedRooms:
 		if room.coords == coords:
 			return false
 	return true
 
+#On each frame, check if a room needs to be generated or is being entered for the first time.
 func _process(delta):
 	#Create new room if player to right of current room
 	if(player.position[0] > player.currentRoom.position[0] + 2304):
@@ -142,3 +147,8 @@ func _on_World_room_cleared() -> void:
 
 func _on_Player_destroyed(body) -> void:
 	player_dead = true
+	yield(player.get_node("DeathTween"), "tween_all_completed")
+	var death_screen = load("res://Scenes/Menu/DeathMenu.tscn").instance()
+	death_screen.score = player.coins
+	$CanvasLayer.add_child(death_screen)
+	

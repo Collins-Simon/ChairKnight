@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Drops/Coin.gd"
 }, {
+"base": "SubMenu",
+"class": "DeathMenu",
+"language": "GDScript",
+"path": "res://Scenes/Menu/DeathMenu.gd"
+}, {
 "base": "Area2D",
 "class": "Drop",
 "language": "GDScript",
@@ -63,6 +68,11 @@ _global_script_classes=[ {
 "class": "Explosion",
 "language": "GDScript",
 "path": "res://Scenes/Equipment/Explosion.gd"
+}, {
+"base": "Node2D",
+"class": "FloatingText",
+"language": "GDScript",
+"path": "res://Scenes/FloatingText.gd"
 }, {
 "base": "RigidBody2D",
 "class": "GrappleBody",
@@ -119,6 +129,7 @@ _global_script_class_icons={
 "Bullet": "",
 "Character": "",
 "Coin": "",
+"DeathMenu": "",
 "Drop": "",
 "Enemy": "",
 "EnemyBig": "",
@@ -126,6 +137,7 @@ _global_script_class_icons={
 "EnemyRanged": "",
 "EnemySmall": "",
 "Explosion": "",
+"FloatingText": "",
 "GrappleBody": "",
 "Health": "",
 "Hitbox": "",
