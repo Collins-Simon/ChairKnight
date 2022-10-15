@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Environment/Corridor.gd"
 }, {
+"base": "SubMenu",
+"class": "DeathMenu",
+"language": "GDScript",
+"path": "res://Scenes/Menu/DeathMenu.gd"
+}, {
 "base": "Area2D",
 "class": "Drop",
 "language": "GDScript",
@@ -130,6 +135,7 @@ _global_script_class_icons={
 "Character": "",
 "Coin": "",
 "Corridor": "",
+"DeathMenu": "",
 "Drop": "",
 "Enemy": "",
 "EnemyBig": "",
@@ -159,6 +165,7 @@ config/icon="res://Assets/Images/icon.png"
 [autoload]
 
 Entities="*res://Scenes/Singletons/Entities.gd"
+Settings="*res://Scenes/Singletons/Settings.gd"
 
 [global]
 

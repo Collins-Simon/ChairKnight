@@ -1,9 +1,19 @@
-[gd_resource type="Theme" load_steps=7 format=2]
+[gd_resource type="Theme" load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Fonts/montreal/Montreal.tres" type="DynamicFont" id=1]
 
 [sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.220226, 0.105057, 0.527344, 1 )
+bg_color = Color( 0.219608, 0.105882, 0.52549, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.105882, 0.505882, 0.52549, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.105882, 0.505882, 0.52549, 1 )
+
+[sub_resource type="StyleBoxLine" id=6]
+color = Color( 0.219608, 0.105882, 0.52549, 1 )
+thickness = 2
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.376471, 0.211765, 0.176471, 1 )
@@ -28,6 +38,9 @@ corner_radius_bottom_left = 20
 [resource]
 Button/fonts/font = ExtResource( 1 )
 Button/styles/focus = SubResource( 4 )
+HSlider/styles/grabber_area = SubResource( 7 )
+HSlider/styles/grabber_area_highlight = SubResource( 8 )
+HSlider/styles/slider = SubResource( 6 )
 Label/fonts/font = ExtResource( 1 )
 Panel/styles/panel = SubResource( 1 )
 PanelContainer/styles/panel = SubResource( 5 )
