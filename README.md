@@ -44,4 +44,4 @@ The executables can be downloaded from the cicd pipeline artifacts:<br>
 
 ### Videos
 * [Chair Knight Gameplay Video](https://youtu.be/3aINhSnYQqE)
-* [Chair Knight Code Documentation Video](https://youtu.be/yZQDyQa5kjQ)
+* [Chair Knight Code Documentation Video](https://youtu.be/zVFkdZ0amuI)
