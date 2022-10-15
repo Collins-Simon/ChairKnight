@@ -1,5 +1,7 @@
 extends Node2D
 class_name FloatingText
+# FloatingText is a small label that floats up and disappears.
+# It is used to show damage and healing numbers during the game.
 
 
 var text: String
