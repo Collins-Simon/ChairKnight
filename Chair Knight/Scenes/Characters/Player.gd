@@ -124,6 +124,7 @@ func _on_DropPickupArea_area_entered(area: Drop) -> void:
 		emit_signal("healed", self, heal_value)
 	elif area is Coin:
 		coins += value
+		print("picked up coin. total: ", coins)
 	area.queue_free()
 
 
