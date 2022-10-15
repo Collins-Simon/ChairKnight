@@ -22,6 +22,7 @@ func closeDoors():
 
 #Place all tiles provided via an array of triplets; each coords contains x, y, and tile index.
 func placeAll(coordsSet):
+# warning-ignore:shadowed_variable
 	for coords in coordsSet:
 		set_cell(coords[0], coords[1], coords[2])
 

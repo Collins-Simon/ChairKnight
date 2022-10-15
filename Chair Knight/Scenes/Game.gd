@@ -27,16 +27,16 @@ func entered_new_room(numPillar, numSmall, numBig, numExplosive, numRanged, numB
 	player.currentRoom.closeDoors()
 
 	# Add pillars
-	for i in range(numPillar): world.spawn_entity(Entities.PILLAR, randomEligibleRoomSpot())
+	for _i in range(numPillar): world.spawn_entity(Entities.PILLAR, randomEligibleRoomSpot())
 
 	# Add some Enemies
-	for i in range(numSmall): world.spawn_entity(Entities.ENEMY_SMALL, randomEligibleRoomSpot())
-	for i in range(numBig): world.spawn_entity(Entities.ENEMY_BIG, randomEligibleRoomSpot())
-	for i in range(numExplosive): world.spawn_entity(Entities.ENEMY_EXPLOSIVE, randomEligibleRoomSpot())
-	for i in range(numRanged): world.spawn_entity(Entities.ENEMY_RANGED, randomEligibleRoomSpot())
+	for _i in range(numSmall): world.spawn_entity(Entities.ENEMY_SMALL, randomEligibleRoomSpot())
+	for _i in range(numBig): world.spawn_entity(Entities.ENEMY_BIG, randomEligibleRoomSpot())
+	for _i in range(numExplosive): world.spawn_entity(Entities.ENEMY_EXPLOSIVE, randomEligibleRoomSpot())
+	for _i in range(numRanged): world.spawn_entity(Entities.ENEMY_RANGED, randomEligibleRoomSpot())
 
 	# Add some Bombs
-	for i in range(numBomb): world.spawn_entity(Entities.BOMB, randomEligibleRoomSpot())
+	for _i in range(numBomb): world.spawn_entity(Entities.BOMB, randomEligibleRoomSpot())
 
 #Return a random eligible location to place an entity at; if space occupied, run recursively until valid spot found.
 func randomEligibleRoomSpot():
@@ -53,7 +53,8 @@ func _unhandled_input(event):
 
 	elif event is InputEventKey:
 		if event.scancode == KEY_BACKSPACE and event.is_pressed():
-			get_tree().reload_current_scene() # reload scene with BACKSPACE
+			var err = get_tree().reload_current_scene() # reload scene with BACKSPACE
+			assert(err == OK)
 		elif event.scancode == KEY_SPACE and event.is_pressed():
 			player.grapple_launch()  # launch Player at grappled target with SPACE
 		elif event.scancode == KEY_ESCAPE and event.is_pressed():
@@ -90,7 +91,7 @@ func generateRoom(coords):
 
 #Finds and returns the room with the given set of coordinates.
 func getRoom(coords):
-	var room = room_scene.instance()
+	var _room = room_scene.instance()
 	for r in createdRooms:
 		if r.coords == coords:
 			return(r)
@@ -103,7 +104,7 @@ func notAlreadyVisited(coords):
 	return true
 
 #On each frame, check if a room needs to be generated or is being entered for the first time.
-func _process(delta):
+func _process(_delta):
 	#Create new room if player to right of current room
 	if(player.position[0] > player.currentRoom.position[0] + 2304):
 		#Check no existing room to right
@@ -151,7 +152,7 @@ func _on_World_room_cleared() -> void:
 	player.currentRoom.roomCleared()
 
 
-func _on_Player_destroyed(body) -> void:
+func _on_Player_destroyed(_body) -> void:
 	player_dead = true
 	yield(player.get_node("DeathTween"), "tween_all_completed")
 	var death_screen = load("res://Scenes/Menu/DeathMenu.tscn").instance()

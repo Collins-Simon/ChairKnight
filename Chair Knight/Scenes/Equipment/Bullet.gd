@@ -27,11 +27,11 @@ func _physics_process(delta: float) -> void:
 	position += velocity * delta # move the Bullet
 
 # Destroy the Bullet if it applies damage to something.
-func _on_Hitbox_applied_damage(damage) -> void:
+func _on_Hitbox_applied_damage(_damage) -> void:
 	queue_free()
 
 # Destroy the Bullet if it collides with something.
-func _on_Hurtbox_body_entered(body: Node) -> void:
+func _on_Hurtbox_body_entered(_body: Node) -> void:
 	queue_free()
 
 # Destroy the Bullet if its lifetime has expired.

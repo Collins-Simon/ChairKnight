@@ -3,14 +3,15 @@ class_name Character
 # Character represents a GrappleBody that has health and can move by itself.
 
 
-export(float) var max_speed = 5000
-export(float) var acceleration = 2500
-export(float) var idle_friction = 1000
+export(float) var max_speed = 5000.0
+export(float) var acceleration = 2500.0
+export(float) var idle_friction = 1000.0
 export(float) var dampening_factor = 0.95
 export(int) var health = 1000
 var max_health = health
 
 signal damaged(character, amount)
+# warning-ignore:unused_signal
 signal healed(character, amount)
 
 

@@ -8,10 +8,11 @@ var prev_velocity := Vector2.ZERO
 var destroyed := false
 
 signal clicked(left_click, target)
+# warning-ignore:unused_signal
 signal destroyed(body)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Save linear_velocity for use in collision damage calculations:
 	prev_velocity = linear_velocity
 
@@ -29,6 +30,6 @@ func get_attached_ropes() -> Array:
 
 # Notifies any listeners when this GrappleBody is left clicked.
 # Used for grappling.
-func _on_GrappleArea_input_event(viewport, event, shape_idx):
+func _on_GrappleArea_input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.is_pressed():
 		emit_signal("clicked", event.button_index == BUTTON_LEFT, self)
