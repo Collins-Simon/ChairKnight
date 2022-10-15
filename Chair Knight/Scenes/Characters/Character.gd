@@ -8,6 +8,8 @@ export(float) var dampening_factor = 0.95
 export(int) var health = 1000
 var max_health = health
 
+func _ready():
+	max_health = health
 
 func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	if destroyed: return
