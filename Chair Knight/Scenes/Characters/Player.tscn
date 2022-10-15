@@ -182,7 +182,7 @@ position = Vector2( 11, -42 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 12 )
 animation = "Idle"
-frame = 5
+frame = 8
 playing = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]

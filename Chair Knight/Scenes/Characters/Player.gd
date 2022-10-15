@@ -22,11 +22,19 @@ func _physics_process(delta: float) -> void:
 	hitbox.damage = linear_velocity.length()
 	
 	#Handle animations
-	if(linear_velocity.x > 0):
-		anim_sprite.flip_h = false
-	else:
-		anim_sprite.flip_h = true
 	
+	
+	#Set orientation
+	print(linear_velocity.x)
+	if(linear_velocity.x > 5):
+		anim_sprite.flip_h = false
+	elif(linear_velocity.x < -5):
+		anim_sprite.flip_h = true
+	elif(linear_velocity.length() < 5 and !diving):
+		anim_sprite.set_animation("Idle")
+		
+	if(linear_velocity.length() > 5 and !diving):
+		anim_sprite.set_animation("Walk")
 
 func launch(target_pos : Vector2) -> void:
 	anim_sprite.set_animation("Dive")
