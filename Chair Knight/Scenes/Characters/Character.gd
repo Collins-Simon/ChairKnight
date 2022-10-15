@@ -9,6 +9,7 @@ export(int) var health = 1000
 var max_health = health
 
 signal damaged(character, amount)
+signal healed(character, amount)
 
 
 func _ready():
