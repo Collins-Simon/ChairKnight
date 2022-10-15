@@ -60,20 +60,21 @@ func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
 	entities.add_child(bullet)
 
 
+# Spawns a FloatingText with the damage amount whenever a Character is damaged.
 func _on_Character_damaged(character: Character, amount: int) -> void:
 	var pos = character.global_position + Vector2(10, -30)
 	var meta_data := {}
 	meta_data["text"] = "-" + str(amount)
-	if character is Player: meta_data["color"] = Color(1, 0.1, 0)
-	else: meta_data["color"] = Color(0.8, 0.8, 0)
+	if character is Player: meta_data["color"] = Color(1, 0.1, 0) # red
+	else: meta_data["color"] = Color(0.8, 0.8, 0) # yellow
 	spawn_entity(Entities.FLOATING_TEXT, pos, meta_data)
 
-
+# Spawns a FloatingText with the heal amount whenever a Character is healed.
 func _on_Character_healed(character: Character, amount: int) -> void:
 	var pos = character.global_position + Vector2(10, -30)
 	var meta_data := {}
 	meta_data["text"] = "+" + str(amount)
-	meta_data["color"] = Color(0, 0.9, 0)
+	meta_data["color"] = Color(0, 0.9, 0) # green
 	spawn_entity(Entities.FLOATING_TEXT, pos, meta_data)
 
 # Connects the GrappleBody's signals to the right methods.
