@@ -44,17 +44,17 @@ func _physics_process(delta: float) -> void:
 		anim_sprite.flip_h = true
 	elif(linear_velocity.length() < 5 and !diving and !damaged):
 		anim_sprite.set_animation("Idle")
+		anim_sprite.modulate = Color(1,1,1)
 
 	if(linear_velocity.length() > 5 and !diving and !damaged):
 		anim_sprite.set_animation("Walk")
+		anim_sprite.modulate = Color(1,1,1)
 
 
 func _on_Player_damaged(amount):
-	print("Oww")
 	damaged = true
 	anim_sprite.set_animation("Damaged")
 
-	print(anim_sprite.modulate)
 	
 	#anim_sprite.modulate = "0.945098,0.219608,0.219608,1"
 	anim_sprite.modulate = Color(0.945098,0.219608,0.219608)
@@ -93,6 +93,7 @@ func launch(target_pos : Vector2) -> void:
 	apply_central_impulse(diff.normalized() * (3500 + dist * 5))
 	anim_sprite.set_animation("Dive")
 	diving = true
+	damaged = false
 
 
 func _on_Player_destroyed(body) -> void:
