@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Drops/Coin.gd"
 }, {
+"base": "TileMap",
+"class": "Corridor",
+"language": "GDScript",
+"path": "res://Scenes/Environment/Corridor.gd"
+}, {
 "base": "Area2D",
 "class": "Drop",
 "language": "GDScript",
@@ -119,6 +124,7 @@ _global_script_class_icons={
 "Bullet": "",
 "Character": "",
 "Coin": "",
+"Corridor": "",
 "Drop": "",
 "Enemy": "",
 "EnemyBig": "",
