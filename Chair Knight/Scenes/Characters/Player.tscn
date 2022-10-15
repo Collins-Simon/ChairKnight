@@ -39,7 +39,7 @@ shader_param/noise_texture = SubResource( 5 )
 radius = 30.0
 
 [sub_resource type="CircleShape2D" id=7]
-radius = 200.0
+radius = 400.0
 
 [sub_resource type="CircleShape2D" id=8]
 radius = 40.0

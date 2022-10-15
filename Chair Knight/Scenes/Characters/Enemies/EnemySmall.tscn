@@ -209,6 +209,8 @@ mass = 0.1
 script = ExtResource( 2 )
 max_speed = 1500.0
 acceleration = 750.0
+dropped_health = 50
+dropped_coins = 1
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0, -12.953 )
@@ -216,7 +218,7 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 hframes = 32
 vframes = 16
-frame = 233
+frame = 234
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 1 )

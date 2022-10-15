@@ -1,6 +1,7 @@
 extends Node
 
 
+# Enum representing the different types of entity:
 enum {
 	PLAYER,
 
@@ -11,8 +12,12 @@ enum {
 
 	PILLAR,
 	BOMB,
+
+	HEALTH,
+	COIN,
 }
 
+# Dictionary mapping each entity enum to its scene:
 var scenes := {
 	PLAYER: load("res://Scenes/Characters/Player.tscn"),
 
@@ -23,7 +28,11 @@ var scenes := {
 
 	PILLAR: load("res://Scenes/Environment/Pillar.tscn"),
 	BOMB: load("res://Scenes/Environment/Bomb.tscn"),
+
+	HEALTH: load("res://Scenes/Drops/Health.tscn"),
+	COIN: load("res://Scenes/Drops/Coin.tscn"),
 }
 
+# Retrieves an entity's scene given its enum:
 func get_scene(entity_enum: int) -> PackedScene:
 	return scenes[entity_enum]

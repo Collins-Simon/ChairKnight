@@ -34,8 +34,12 @@ func spawn_entity(entity_enum: int, pos: Vector2 = Vector2.INF, meta_data: Dicti
 		elif entity is Bomb:
 			entity.connect("explode", self, "create_explosion")
 
+	elif entity is Drop:
+		if meta_data.has("velocity"): entity.init(pos, meta_data.get("velocity"))
+		else: entity.init(pos)
+
 	# Finally add it to the scene:
-	entities.add_child(entity)
+	entities.call_deferred("add_child", entity)
 
 
 # Creates an Explosion at the position of the given exploder.
@@ -78,6 +82,16 @@ func _on_GrappleBody_clicked(left_click: bool, target: GrappleBody):
 
 # Called when a GrappleBody should be destroyed.
 func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
+	# If Enemy died, drop Health and Coins:
+	if body is Enemy:
+		var pos = body.global_position
+		var num_health_drops: int = ceil(body.dropped_health / 100.0)
+		var num_coin_drops: int = body.dropped_coins
+		for i in range(num_health_drops):
+			spawn_entity(Entities.HEALTH, pos)
+		for i in range(num_coin_drops):
+			spawn_entity(Entities.COIN, pos)
+
 	# Check if there are any Enemies left:
 	var room_cleared = true
 	for child in entities.get_children():

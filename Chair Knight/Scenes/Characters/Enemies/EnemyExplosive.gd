@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 
 	if(direction.x > 0):
 		$Sprite.flip_h = false
-	else:
+	elif (direction.x < 0):
 		$Sprite.flip_h = true
 
 func explode():

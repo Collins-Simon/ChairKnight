@@ -6,6 +6,7 @@ export(float) var acceleration = 2500
 export(float) var idle_friction = 1000
 export(float) var dampening_factor = 0.95
 export(int) var health = 1000
+var max_health = health
 
 
 func _on_Hurtbox_area_entered(area: Hitbox) -> void:

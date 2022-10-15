@@ -73,5 +73,8 @@ func _on_DropAttractionArea_area_exited(area: Drop) -> void:
 
 func _on_DropPickupArea_area_entered(area: Drop) -> void:
 	var value := area.value
-	print(value)
+	if area is Health:
+		health += min(value, max_health - health)
+	elif area is Coin:
+		coins += value
 	area.queue_free()

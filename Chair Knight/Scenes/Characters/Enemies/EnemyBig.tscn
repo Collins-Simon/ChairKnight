@@ -256,6 +256,8 @@ color_ramp = SubResource( 9 )
 mass = 3.0
 script = ExtResource( 2 )
 health = 3000
+dropped_health = 500
+dropped_coins = 10
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2( 3, 3 )
