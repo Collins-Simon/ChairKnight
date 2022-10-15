@@ -10,6 +10,14 @@ var coins := 0
 onready var sprite = $Sprite
 onready var hitbox = $Hitbox
 onready var death_tween = $DeathTween
+onready var anim_sprite = $AnimatedSprite
+var diving = false;
+
+func _on_AnimatedSprite_animation_finished():
+	if(anim_sprite.get_animation() == "Dive"):
+		diving = false
+		anim_sprite.set_animation("Walk")
+
 
 
 func _physics_process(delta: float) -> void:
@@ -22,7 +30,19 @@ func _physics_process(delta: float) -> void:
 
 	# Make the damage of the Player's hitbox proportional its speed:
 	hitbox.damage = linear_velocity.length()
+	
+	#Handle animations
+	#Set orientation
 
+	if(linear_velocity.x > 5):
+		anim_sprite.flip_h = false
+	elif(linear_velocity.x < -5):
+		anim_sprite.flip_h = true
+	elif(linear_velocity.length() < 5 and !diving):
+		anim_sprite.set_animation("Idle")
+		
+	if(linear_velocity.length() > 5 and !diving):
+		anim_sprite.set_animation("Walk")
 
 # Grapple a given target.
 func grapple(target: GrappleBody) -> void:
@@ -45,6 +65,7 @@ func grapple_launch() -> void:
 	var end_body = grapple_rope.end_body
 	ungrapple()
 	launch(end_body.global_position)
+	
 
 
 # Launches the Player at a given position.
@@ -52,6 +73,8 @@ func launch(target_pos : Vector2) -> void:
 	var diff := target_pos - global_position
 	var dist := diff.length()
 	apply_central_impulse(diff.normalized() * (3500 + dist * 5))
+	anim_sprite.set_animation("Dive")
+	diving = true
 
 
 func _on_Player_destroyed(body) -> void:
@@ -59,7 +82,7 @@ func _on_Player_destroyed(body) -> void:
 	hitbox.monitorable = false
 	$DropAttractionArea.monitoring = false
 	$DropPickupArea.monitoring = false
-	death_tween.interpolate_property(sprite, "material:shader_param/value", 1.0, 0.0, 1)
+	death_tween.interpolate_property(anim_sprite, "material:shader_param/value", 1.0, 0.0, 1)
 	death_tween.start()
 
 
