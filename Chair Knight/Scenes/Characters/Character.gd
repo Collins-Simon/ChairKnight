@@ -8,7 +8,7 @@ export(float) var dampening_factor = 0.95
 export(int) var health = 1000
 var max_health = health
 
-signal damaged(amount)
+signal damaged(character, amount)
 
 
 func _ready():
@@ -24,7 +24,7 @@ func _on_Hurtbox_area_entered(area: Hitbox) -> void:
 	# Apply damage:
 	var damage := min(max_damage, health)
 	health -= damage
-	emit_signal("damaged", damage)
+	emit_signal("damaged", self, damage)
 	if health <= 0:
 		destroyed = true
 		emit_signal("destroyed", self)
