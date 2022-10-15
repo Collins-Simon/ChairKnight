@@ -32,7 +32,6 @@ texture = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="GrappleArea" parent="." instance=ExtResource( 2 )]
-visible = false
 
 [node name="CollisionShape2D" parent="GrappleArea" index="0"]
 shape = SubResource( 2 )
