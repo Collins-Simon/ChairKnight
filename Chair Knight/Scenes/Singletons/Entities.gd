@@ -15,6 +15,8 @@ enum {
 
 	HEALTH,
 	COIN,
+
+	FLOATING_TEXT,
 }
 
 # Dictionary mapping each entity enum to its scene:
@@ -31,6 +33,8 @@ var scenes := {
 
 	HEALTH: load("res://Scenes/Drops/Health.tscn"),
 	COIN: load("res://Scenes/Drops/Coin.tscn"),
+
+	FLOATING_TEXT: load("res://Scenes/FloatingText.tscn"),
 }
 
 # Retrieves an entity's scene given its enum:

@@ -15,13 +15,15 @@ var damaged = false
 
 func _on_AnimatedSprite_animation_finished():
 	if(anim_sprite.get_animation() == "Dive"):
+		damaged = false
 		diving = false
 		anim_sprite.set_animation("Walk")
 	if(anim_sprite.get_animation() == "Damaged"):
 		damaged	= false
+		diving = false
 		anim_sprite.modulate = Color(1,1,1)
 		anim_sprite.set_animation("Walk")
-		
+
 
 
 func _physics_process(delta: float) -> void:
@@ -51,11 +53,11 @@ func _physics_process(delta: float) -> void:
 		anim_sprite.modulate = Color(1,1,1)
 
 
-func _on_Player_damaged(amount):
+func _on_Player_damaged(character, amount):
 	damaged = true
 	anim_sprite.set_animation("Damaged")
 
-	
+
 	#anim_sprite.modulate = "0.945098,0.219608,0.219608,1"
 	anim_sprite.modulate = Color(0.945098,0.219608,0.219608)
 
@@ -117,7 +119,9 @@ func _on_DropAttractionArea_area_exited(area: Drop) -> void:
 func _on_DropPickupArea_area_entered(area: Drop) -> void:
 	var value := area.value
 	if area is Health:
-		health += min(value, max_health - health)
+		var heal_value = min(value, max_health - health)
+		health += heal_value
+		emit_signal("healed", self, heal_value)
 	elif area is Coin:
 		coins += value
 		print("picked up coin. total: ", coins)

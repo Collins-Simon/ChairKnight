@@ -28,6 +28,7 @@ func spawn_entity(entity_enum: int, pos: Vector2 = Vector2.INF, meta_data: Dicti
 		if meta_data.has("velocity"): entity.linear_velocity = meta_data.get("velocity")
 
 		if entity is Enemy:
+			entity.connect("damaged", self, "_on_Character_damaged")
 			if entity is EnemyExplosive: entity.connect("explode", self, "create_explosion")
 			elif entity is EnemyRanged: entity.connect("shoot_bullet", self, "shoot_bullet")
 
@@ -37,6 +38,9 @@ func spawn_entity(entity_enum: int, pos: Vector2 = Vector2.INF, meta_data: Dicti
 	elif entity is Drop:
 		if meta_data.has("velocity"): entity.init(pos, meta_data.get("velocity"))
 		else: entity.init(pos)
+
+	elif entity is FloatingText:
+		entity.init(meta_data.get("text"), meta_data.get("color"))
 
 	# Finally add it to the scene:
 	entities.call_deferred("add_child", entity)
@@ -55,6 +59,23 @@ func shoot_bullet(shooter: Node2D, velocity: Vector2) -> void:
 	bullet.init(shooter.global_position, velocity, shooter is Enemy)
 	entities.add_child(bullet)
 
+
+# Spawns a FloatingText with the damage amount whenever a Character is damaged.
+func _on_Character_damaged(character: Character, amount: int) -> void:
+	var pos = character.global_position + Vector2(10, -30)
+	var meta_data := {}
+	meta_data["text"] = "-" + str(amount)
+	if character is Player: meta_data["color"] = Color(1, 0.1, 0) # red
+	else: meta_data["color"] = Color(0.8, 0.8, 0) # yellow
+	spawn_entity(Entities.FLOATING_TEXT, pos, meta_data)
+
+# Spawns a FloatingText with the heal amount whenever a Character is healed.
+func _on_Character_healed(character: Character, amount: int) -> void:
+	var pos = character.global_position + Vector2(10, -30)
+	var meta_data := {}
+	meta_data["text"] = "+" + str(amount)
+	meta_data["color"] = Color(0, 0.9, 0) # green
+	spawn_entity(Entities.FLOATING_TEXT, pos, meta_data)
 
 # Connects the GrappleBody's signals to the right methods.
 func connect_grapple_body(body: GrappleBody) -> void:
@@ -109,4 +130,7 @@ func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
 
 	# Finally delete the entity:
 	body.queue_free()
+
+
+
 

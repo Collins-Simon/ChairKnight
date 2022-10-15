@@ -35,4 +35,6 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [connection signal="room_cleared" from="World" to="." method="_on_World_room_cleared"]
+[connection signal="damaged" from="World/Entities/Player" to="World" method="_on_Character_damaged"]
 [connection signal="destroyed" from="World/Entities/Player" to="." method="_on_Player_destroyed"]
+[connection signal="healed" from="World/Entities/Player" to="World" method="_on_Character_healed"]
