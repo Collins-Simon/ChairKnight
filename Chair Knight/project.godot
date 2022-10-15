@@ -165,6 +165,7 @@ config/icon="res://Assets/Images/icon.png"
 [autoload]
 
 Entities="*res://Scenes/Singletons/Entities.gd"
+Settings="*res://Scenes/Singletons/Settings.gd"
 
 [global]
 
