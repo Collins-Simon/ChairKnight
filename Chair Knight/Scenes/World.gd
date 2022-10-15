@@ -79,7 +79,9 @@ func _on_Character_healed(character: Character, amount: int) -> void:
 
 # Connects the GrappleBody's signals to the right methods.
 func connect_grapple_body(body: GrappleBody) -> void:
+# warning-ignore:return_value_discarded
 	body.connect("clicked", self, "_on_GrappleBody_clicked")
+# warning-ignore:return_value_discarded
 	body.connect("destroyed", self, "_on_GrappleBody_destroyed")
 
 # Called when a GrappleBody is clicked.
@@ -106,11 +108,11 @@ func _on_GrappleBody_destroyed(body: GrappleBody) -> void:
 	# If Enemy died, drop Health and Coins:
 	if body is Enemy:
 		var pos = body.global_position
-		var num_health_drops: int = ceil(body.dropped_health / 100.0)
+		var num_health_drops: int = int(ceil(body.dropped_health / 100.0))
 		var num_coin_drops: int = body.dropped_coins
-		for i in range(num_health_drops):
+		for _i in range(num_health_drops):
 			spawn_entity(Entities.HEALTH, pos)
-		for i in range(num_coin_drops):
+		for _i in range(num_coin_drops):
 			spawn_entity(Entities.COIN, pos)
 
 	# Check if there are any Enemies left:

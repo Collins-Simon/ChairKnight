@@ -58,7 +58,7 @@ func _physics_process(delta: float) -> void:
 
 
 # Play the damaged animation when the Player is damaged.
-func _on_Player_damaged(character, amount):
+func _on_Player_damaged(_character, _amount):
 	damaged = true
 	anim_sprite.set_animation("Damaged")
 	anim_sprite.modulate = Color(0.945098,0.219608,0.219608) # red
@@ -98,7 +98,7 @@ func launch(target_pos : Vector2) -> void:
 	damaged = false
 
 
-func _on_Player_destroyed(body) -> void:
+func _on_Player_destroyed(_body) -> void:
 	$CollisionShape2D.set_deferred("disabled", true)
 	hitbox.set_deferred("monitorable", false)
 	$DropAttractionArea.monitoring = false

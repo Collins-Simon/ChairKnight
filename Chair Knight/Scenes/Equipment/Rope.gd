@@ -71,6 +71,6 @@ func _ready():
 	for link in links:
 		line.add_point(link.global_position)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	for i in range(links.size()):
 		line.set_point_position(i, links[i].global_position)

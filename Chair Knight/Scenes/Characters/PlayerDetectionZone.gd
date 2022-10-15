@@ -14,5 +14,5 @@ func _on_PlayerDetectionZone_body_entered(body: Player) -> void:
 	player = body
 
 # Removes the stored Player reference when they leave the area.
-func _on_PlayerDetectionZone_body_exited(body: Player) -> void:
+func _on_PlayerDetectionZone_body_exited(_body: Player) -> void:
 	player = null

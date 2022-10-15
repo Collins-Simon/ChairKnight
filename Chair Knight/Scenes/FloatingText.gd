@@ -12,6 +12,8 @@ onready var float_tween = $FloatTween
 
 
 # Initialises the FloatingText.
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
 func init(text: String, color: Color) -> void:
 	self.text = text
 	self.color = color

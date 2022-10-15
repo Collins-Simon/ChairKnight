@@ -14,6 +14,7 @@ onready var timer = $UndetectableTimer
 
 
 # Initialise the Drop with a position and velocity.
+# warning-ignore:shadowed_variable
 func init(pos: Vector2, velocity: Vector2 = Vector2.INF) -> void:
 	global_position = pos
 	if velocity == Vector2.INF:
@@ -28,12 +29,14 @@ func _physics_process(delta: float) -> void:
 	# Move towards target:
 	if target != null:
 		var disp = target.global_position - global_position
-		var desired_velocity = (disp * 10.0).clamped(MAX_SPEED)
+#		var desired_velocity = (disp * 10.0).clamped(MAX_SPEED)
+		var desired_velocity = (disp * 10.0).limit_length(MAX_SPEED)
 		velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
 	global_position += velocity * delta
 	velocity *= 0.95
 
 # Sets the entity that this Drop should fly towards (usually the Player).
+# warning-ignore:shadowed_variable
 func set_target(target) -> void:
 	self.target = target
 

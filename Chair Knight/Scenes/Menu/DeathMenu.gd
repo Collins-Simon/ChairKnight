@@ -13,7 +13,9 @@ func _ready():
 
 ## Restarts the currently active scene
 func restart():
-	get_tree().reload_current_scene()
+	var err = get_tree().reload_current_scene()
+	assert(err == OK)
+
 
 ## Sets the paused state of the scene treee
 func set_paused(value : bool):
