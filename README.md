@@ -51,4 +51,8 @@ classDiagram
 ```
 
 ### External Resources:
+Tileset, pillars, and enemies:
 https://0x72.itch.io/dungeontileset-ii?download
+Player character:
+https://aamatniekss.itch.io/fantasy-knight-free-pixelart-animated-character
+
