@@ -1,42 +1,11 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://Scenes/Characters/Player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Images/icon.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Characters/Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Characters/Hitbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Images/_Run.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Images/_Idle.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Images/_Roll.png" type="Texture" id=7]
-
-[sub_resource type="Shader" id=2]
-code = "shader_type canvas_item;
-
-uniform float value : hint_range(0, 1);
-uniform sampler2D noise_texture;
-
-void fragment(){
-	vec4 current_pixel = texture(TEXTURE, UV);
-	vec4 noise_pixel = texture(noise_texture, UV);
-	
-	if (noise_pixel.r > value){
-		COLOR.a -= 1.0f;
-	}
-	else {
-		COLOR = mix(current_pixel, vec4(0.5, 0.9, 1, 1), 1.0f - value);
-	}
-}"
-
-[sub_resource type="OpenSimplexNoise" id=4]
-seed = 69
-
-[sub_resource type="NoiseTexture" id=5]
-noise = SubResource( 4 )
-
-[sub_resource type="ShaderMaterial" id=6]
-resource_local_to_scene = true
-shader = SubResource( 2 )
-shader_param/value = 1.0
-shader_param/noise_texture = SubResource( 5 )
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 30.0
@@ -46,6 +15,27 @@ radius = 400.0
 
 [sub_resource type="CircleShape2D" id=8]
 radius = 40.0
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform float glow : hint_range(0, 1);
+uniform float shrink : hint_range(0, 1);
+
+void fragment() {
+	vec4 current_pixel = texture(TEXTURE, UV);
+	COLOR = mix(current_pixel, vec4(1, 0.1, 0.0, current_pixel.a), glow);
+}
+
+void vertex() {
+	VERTEX.y += (1.0 - UV.y) * shrink * 80.0;
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/glow = 0.0
+shader_param/shrink = 0.0
 
 [sub_resource type="AtlasTexture" id=62]
 atlas = ExtResource( 7 )
@@ -201,11 +191,6 @@ gravity_scale = 0.0
 script = ExtResource( 1 )
 health = 2500
 
-[node name="Sprite" type="Sprite" parent="."]
-visible = false
-material = SubResource( 6 )
-texture = ExtResource( 2 )
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
@@ -239,6 +224,7 @@ position = Vector2( 1, -3 )
 scale = Vector2( 2, 2 )
 frames = SubResource( 41 )
 animation = "Walk"
+frame = 4
 playing = true
 
 [connection signal="destroyed" from="." to="." method="_on_Player_destroyed"]
