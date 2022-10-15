@@ -13,14 +13,24 @@ The aim is to collect the most coins by defeating as many enemies as you can bef
 
 
 ### External Resources / Assets:
-links to any libraries or asset origin.
-https://0x72.itch.io/dungeontileset-ii?download
+* [Tileset, pillars, and enemies](https://0x72.itch.io/dungeontileset-ii?download)
+* [Player character](https://aamatniekss.itch.io/fantasy-knight-free-pixelart-animated-character)
+* [Fonts](https://github.com/dalton5000/Godot-Fontpack/)
+* [Godot-CI Docker Image](https://gitlab.com/barichello/godot-ci)
 
 ### AI tools
 We did not use any AI tools for the project.
 
 ### Instructions
-instructions on how to play/demonstrate the game.
+This project uses gitlab cicd in pair with the Godot-CI docker image specified above to automatically export the project to an executable file (or there approximately) this method is operating system dependent.<br>
+The executables can be downloaded from the cicd pipeline artifacts:<br>
+1. CI/CD in left sidebar
+1. Pipelines
+1. branch
+1. branch name main
+1. [(or go here)](https://gitlab.ecs.vuw.ac.nz/course-work/comp313/2022/assignments/hethertren/game-development-project/-/pipelines?scope=branches&page=1&ref=main)
+1. click the download button on the right-hand side and select the right OS-based artifacts
+1. If the artifacts are not there / the option is not available, re-run the pipeline by clciking on the passed button and then manually running the job
 
 ### Demonstrate the Game
 1. Open game
