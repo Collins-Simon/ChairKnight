@@ -17,6 +17,9 @@ func init(pos: Vector2, velocity: Vector2 = Vector2.INF) -> void:
 		velocity = Vector2.ONE.rotated(randf() * TAU) * rand_range(100, 250)
 	self.velocity = velocity
 
+func _ready() -> void:
+	$BobbingAnimationPlayer.play("Bobbing")
+
 func _physics_process(delta: float) -> void:
 	# Move towards target:
 	if target != null:

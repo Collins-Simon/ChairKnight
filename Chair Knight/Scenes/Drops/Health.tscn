@@ -1,13 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Drops/Drop.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Drops/Health.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
 [node name="Health" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 value = 100
+
+[node name="Sprite" parent="SpriteHolder" index="0"]
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 3 )
+hframes = 32
+vframes = 32
+frame = 466
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 1 )
