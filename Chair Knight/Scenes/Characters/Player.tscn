@@ -1,9 +1,12 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Scenes/Characters/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Images/icon.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Characters/Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Characters/Hitbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Images/_Run.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Images/_Idle.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Images/_Roll.png" type="Texture" id=7]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -44,6 +47,152 @@ radius = 400.0
 [sub_resource type="CircleShape2D" id=8]
 radius = 40.0
 
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 7 )
+region = Rect2( 28, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 7 )
+region = Rect2( 149, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 7 )
+region = Rect2( 270, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=65]
+atlas = ExtResource( 7 )
+region = Rect2( 391, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 7 )
+region = Rect2( 512, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 7 )
+region = Rect2( 633, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=68]
+atlas = ExtResource( 7 )
+region = Rect2( 754, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=69]
+atlas = ExtResource( 7 )
+region = Rect2( 875, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=70]
+atlas = ExtResource( 7 )
+region = Rect2( 996, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=71]
+atlas = ExtResource( 7 )
+region = Rect2( 1117, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=72]
+atlas = ExtResource( 7 )
+region = Rect2( 1238, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=73]
+atlas = ExtResource( 7 )
+region = Rect2( 1359, 40, 72, 40 )
+
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 6 )
+region = Rect2( 35, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 6 )
+region = Rect2( 155, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=54]
+atlas = ExtResource( 6 )
+region = Rect2( 275, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=55]
+atlas = ExtResource( 6 )
+region = Rect2( 395, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=56]
+atlas = ExtResource( 6 )
+region = Rect2( 515, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 6 )
+region = Rect2( 635, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=58]
+atlas = ExtResource( 6 )
+region = Rect2( 755, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=59]
+atlas = ExtResource( 6 )
+region = Rect2( 875, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=60]
+atlas = ExtResource( 6 )
+region = Rect2( 995, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 6 )
+region = Rect2( 1115, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 5 )
+region = Rect2( 40, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 5 )
+region = Rect2( 160, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 5 )
+region = Rect2( 280, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=45]
+atlas = ExtResource( 5 )
+region = Rect2( 400, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=46]
+atlas = ExtResource( 5 )
+region = Rect2( 520, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=47]
+atlas = ExtResource( 5 )
+region = Rect2( 640, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=48]
+atlas = ExtResource( 5 )
+region = Rect2( 760, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=49]
+atlas = ExtResource( 5 )
+region = Rect2( 880, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 5 )
+region = Rect2( 1000, 40, 40, 40 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 5 )
+region = Rect2( 1120, 40, 40, 40 )
+
+[sub_resource type="SpriteFrames" id=41]
+animations = [ {
+"frames": [ SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ) ],
+"loop": true,
+"name": "Dive",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 52 ), SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 42 ), SubResource( 43 ), SubResource( 44 ), SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ), SubResource( 49 ), SubResource( 50 ), SubResource( 51 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 15.0
+} ]
+
 [node name="Player" type="RigidBody2D"]
 collision_layer = 2
 mode = 2
@@ -53,6 +202,7 @@ script = ExtResource( 1 )
 health = 2500
 
 [node name="Sprite" type="Sprite" parent="."]
+visible = false
 material = SubResource( 6 )
 texture = ExtResource( 2 )
 
@@ -83,11 +233,21 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DropPickupArea"]
 shape = SubResource( 8 )
 
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+material = SubResource( 6 )
+position = Vector2( 1, -3 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 41 )
+animation = "Walk"
+frame = 9
+playing = true
+
 [connection signal="destroyed" from="." to="." method="_on_Player_destroyed"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="area_entered" from="DropAttractionArea" to="." method="_on_DropAttractionArea_area_entered"]
 [connection signal="area_exited" from="DropAttractionArea" to="." method="_on_DropAttractionArea_area_exited"]
 [connection signal="area_entered" from="DropPickupArea" to="." method="_on_DropPickupArea_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 
 [editable path="Hurtbox"]
 [editable path="Hitbox"]
