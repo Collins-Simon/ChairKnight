@@ -151,4 +151,4 @@ func _on_Player_destroyed(body) -> void:
 	var death_screen = load("res://Scenes/Menu/DeathMenu.tscn").instance()
 	death_screen.score = player.coins
 	$CanvasLayer.add_child(death_screen)
-	
+
