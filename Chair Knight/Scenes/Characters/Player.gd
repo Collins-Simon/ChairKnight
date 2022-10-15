@@ -10,13 +10,18 @@ var coins := 0
 onready var hitbox = $Hitbox
 onready var death_tween = $DeathTween
 onready var anim_sprite = $AnimatedSprite
-var diving = false;
+var diving = false
+var damaged = false
 
 func _on_AnimatedSprite_animation_finished():
 	if(anim_sprite.get_animation() == "Dive"):
 		diving = false
 		anim_sprite.set_animation("Walk")
-
+	if(anim_sprite.get_animation() == "Damaged"):
+		damaged	= false
+		anim_sprite.modulate = Color(1,1,1)
+		anim_sprite.set_animation("Walk")
+		
 
 
 func _physics_process(delta: float) -> void:
@@ -37,11 +42,25 @@ func _physics_process(delta: float) -> void:
 		anim_sprite.flip_h = false
 	elif(linear_velocity.x < -5):
 		anim_sprite.flip_h = true
-	elif(linear_velocity.length() < 5 and !diving):
+	elif(linear_velocity.length() < 5 and !diving and !damaged):
 		anim_sprite.set_animation("Idle")
 
-	if(linear_velocity.length() > 5 and !diving):
+	if(linear_velocity.length() > 5 and !diving and !damaged):
 		anim_sprite.set_animation("Walk")
+
+
+func _on_Player_damaged(amount):
+	print("Oww")
+	damaged = true
+	anim_sprite.set_animation("Damaged")
+
+	print(anim_sprite.modulate)
+	
+	#anim_sprite.modulate = "0.945098,0.219608,0.219608,1"
+	anim_sprite.modulate = Color(0.945098,0.219608,0.219608)
+
+	pass # Replace with function body.
+
 
 # Grapple a given target.
 func grapple(target: GrappleBody) -> void:
@@ -101,3 +120,5 @@ func _on_DropPickupArea_area_entered(area: Drop) -> void:
 	elif area is Coin:
 		coins += value
 	area.queue_free()
+
+
