@@ -49,3 +49,6 @@ classDiagram
     PauseMenu : quit()
 
 ```
+
+### External Resources:
+https://0x72.itch.io/dungeontileset-ii?download
