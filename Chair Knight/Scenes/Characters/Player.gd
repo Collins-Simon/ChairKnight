@@ -5,6 +5,7 @@ class_name Player
 var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
 var grapple_rope: Rope = null
 var currentRoom = null
+var coins := 0
 
 onready var sprite = $Sprite
 onready var hitbox = $Hitbox
@@ -56,5 +57,24 @@ func launch(target_pos : Vector2) -> void:
 func _on_Player_destroyed(body) -> void:
 	$CollisionShape2D.disabled = true
 	hitbox.monitorable = false
+	$DropAttractionArea.monitoring = false
+	$DropPickupArea.monitoring = false
 	death_tween.interpolate_property(sprite, "material:shader_param/value", 1.0, 0.0, 1)
 	death_tween.start()
+
+
+func _on_DropAttractionArea_area_entered(area: Drop) -> void:
+	area.set_target(self)
+
+
+func _on_DropAttractionArea_area_exited(area: Drop) -> void:
+	area.set_target(null)
+
+
+func _on_DropPickupArea_area_entered(area: Drop) -> void:
+	var value := area.value
+	if area is Health:
+		health += min(value, max_health - health)
+	elif area is Coin:
+		coins += value
+	area.queue_free()

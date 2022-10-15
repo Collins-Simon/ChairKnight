@@ -24,6 +24,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/Characters/Character.gd"
 }, {
+"base": "Drop",
+"class": "Coin",
+"language": "GDScript",
+"path": "res://Scenes/Drops/Coin.gd"
+}, {
+"base": "Area2D",
+"class": "Drop",
+"language": "GDScript",
+"path": "res://Scenes/Drops/Drop.gd"
+}, {
 "base": "Character",
 "class": "Enemy",
 "language": "GDScript",
@@ -58,6 +68,11 @@ _global_script_classes=[ {
 "class": "GrappleBody",
 "language": "GDScript",
 "path": "res://Scenes/Equipment/GrappleBody.gd"
+}, {
+"base": "Drop",
+"class": "Health",
+"language": "GDScript",
+"path": "res://Scenes/Drops/Health.gd"
 }, {
 "base": "Area2D",
 "class": "Hitbox",
@@ -103,6 +118,8 @@ _global_script_class_icons={
 "Bomb": "",
 "Bullet": "",
 "Character": "",
+"Coin": "",
+"Drop": "",
 "Enemy": "",
 "EnemyBig": "",
 "EnemyExplosive": "",
@@ -110,6 +127,7 @@ _global_script_class_icons={
 "EnemySmall": "",
 "Explosion": "",
 "GrappleBody": "",
+"Health": "",
 "Hitbox": "",
 "MenuSystem": "",
 "OptionsMenu": "",
@@ -200,6 +218,7 @@ ui_down={
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="PlayerHurtbox"
 2d_physics/layer_5="EnemyHurtbox"
+2d_physics/layer_6="Drop"
 
 [physics]
 

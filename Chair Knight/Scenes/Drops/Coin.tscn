@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/Drops/Drop.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Drops/Coin.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Images/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 288, 272, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 296, 272, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 304, 272, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 312, 272, 8, 8 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 6.0
+} ]
+
+[node name="Coin" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="SpriteHolder" index="0"]
+visible = false
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="SpriteHolder" index="1"]
+scale = Vector2( 2, 2 )
+frames = SubResource( 5 )
+frame = 2
+playing = true

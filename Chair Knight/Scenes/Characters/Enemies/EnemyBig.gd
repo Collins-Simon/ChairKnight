@@ -9,7 +9,6 @@ onready var playerDetectionZone = $PlayerDetectionZone
 onready var attack_delay_timer = $AttackDelayTimer
 onready var anim_player = $AnimationPlayer
 onready var weapon_player = $WeaponAnimationPlayer
-onready var weaponHold = $WeaponHolder
 onready var particles = $Particles2D
 
 var facing_right = true
