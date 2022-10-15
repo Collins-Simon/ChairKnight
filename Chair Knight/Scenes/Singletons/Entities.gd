@@ -1,4 +1,5 @@
 extends Node
+# Entities is a global singleton used to hold general game entity meta information.
 
 
 # Enum representing the different types of entity:

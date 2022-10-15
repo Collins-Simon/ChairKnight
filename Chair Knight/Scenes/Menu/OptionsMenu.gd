@@ -1,5 +1,8 @@
 class_name OptionsMenu
 extends SubMenu
 
+func _ready():
+	$"Difficulty multiplier/HSlider".value = Settings.difficulty_multiplier
 
-## put methods relevant to changing settings!
+func set_difficulty(difficulty : float):
+	Settings.difficulty_multiplier = difficulty

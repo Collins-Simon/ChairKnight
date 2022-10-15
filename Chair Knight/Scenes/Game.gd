@@ -11,7 +11,6 @@ onready var world = $World
 onready var createdRooms = []
 onready var visitedRooms = []
 
-
 func _ready() -> void:
 	# Add a Pillar
 	var start = generateRoom([0, 0])
@@ -139,7 +138,14 @@ func _process(delta):
 	#Alternatively, if room not visited and in confines:
 	if(notAlreadyVisited(player.currentRoom.coords)):
 		if(player.position[0] > player.currentRoom.position[0]+128 and player.position[0] < player.currentRoom.position[0]+1280 and player.position[1] > player.currentRoom.position[1]+128 and player.position[1] < player.currentRoom.position[1]+1280):
-			entered_new_room(rand_range(0, 10), rand_range(3, 30), rand_range(1, 10), rand_range(1, 10), rand_range(1,10), rand_range(1,10))
+			entered_new_room(
+				rand_range(0, 10) * Settings.difficulty_multiplier,	# numPillar
+				rand_range(3, 30) * Settings.difficulty_multiplier,	# numSmall
+				rand_range(1, 10) * Settings.difficulty_multiplier,	# numBig
+				rand_range(1, 10) * Settings.difficulty_multiplier,	# numExplosive
+				rand_range(1,10) * Settings.difficulty_multiplier,	# numRanged
+				rand_range(1,10) * Settings.difficulty_multiplier	# numBomb
+				)
 
 func _on_World_room_cleared() -> void:
 	player.currentRoom.roomCleared()
@@ -149,6 +155,6 @@ func _on_Player_destroyed(body) -> void:
 	player_dead = true
 	yield(player.get_node("DeathTween"), "tween_all_completed")
 	var death_screen = load("res://Scenes/Menu/DeathMenu.tscn").instance()
-	death_screen.score = player.coins
+	death_screen.score = player.coins * Settings.difficulty_multiplier
 	$CanvasLayer.add_child(death_screen)
-	
+

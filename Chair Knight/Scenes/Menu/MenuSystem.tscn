@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Menu/SubMenu.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Menu/MenuSystem.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/Images/Title.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/Menu/Title.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/Equipment/GrappleBody.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Menu/OptionsMenu.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Intro"
@@ -139,7 +140,7 @@ text = "QUIT"
 [node name="OptionsMenu" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource( 7 )
 
 [node name="buttonBack" type="Button" parent="OptionsMenu"]
 margin_left = 10.0
@@ -148,26 +149,65 @@ margin_right = 56.0
 margin_bottom = 30.0
 text = "BACK"
 
-<<<<<<< HEAD
-[node name="VBoxContainer" type="VBoxContainer" parent="OptionsMenu"]
-anchor_left = 0.5
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Controls" type="Label" parent="OptionsMenu"]
+margin_left = 512.0
+margin_right = 1028.0
+margin_bottom = 337.0
+text = "CONTROLS:
 
-[node name="Label" type="Label" parent="OptionsMenu/VBoxContainer"]
-margin_right = 512.0
-margin_bottom = 14.0
-text = "potato"
-=======
-[node name="HSlider" type="HSlider" parent="OptionsMenu"]
-margin_left = 343.0
-margin_top = 229.0
-margin_right = 723.0
-margin_bottom = 276.0
-min_value = 1200.0
-max_value = 3000.0
-value = 2500.0
->>>>>>> dd350d35631536cd1eaa74810baef1e19b660387
+WASD : Move
+ESCAPE : Pause
+E : Throw Bomb
+LMB : Grapple Enemy
+While grappling:
+    SPACE: launch yourself at enemy
+    RMB: bind currently selected enemy to 
+	        another target"
+
+[node name="Difficulty multiplier" type="Label" parent="OptionsMenu"]
+margin_left = 22.0
+margin_top = 307.0
+margin_right = 134.0
+margin_bottom = 338.0
+text = "Difficulty multiplier
+"
+
+[node name="HSlider" type="HSlider" parent="OptionsMenu/Difficulty multiplier"]
+margin_left = 30.0
+margin_top = 50.0
+margin_right = 130.0
+margin_bottom = 66.0
+rect_scale = Vector2( 4, 4 )
+min_value = 0.5
+max_value = 3.0
+step = 0.5
+value = 1.0
+tick_count = 6
+ticks_on_borders = true
+
+[node name="easy" type="Label" parent="OptionsMenu/Difficulty multiplier"]
+margin_left = 74.0
+margin_top = 163.0
+margin_right = 129.0
+margin_bottom = 194.0
+rect_rotation = 90.0
+text = "easy"
+
+[node name="normal" type="Label" parent="OptionsMenu/Difficulty multiplier"]
+margin_left = 138.0
+margin_top = 156.0
+margin_right = 225.0
+margin_bottom = 187.0
+rect_rotation = 90.0
+text = "normal"
+
+[node name="hard" type="Label" parent="OptionsMenu/Difficulty multiplier"]
+margin_left = 416.0
+margin_top = 173.0
+margin_right = 471.0
+margin_bottom = 204.0
+rect_rotation = 90.0
+text = "hard"
 
 [connection signal="focus_entered" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu" method="register_focus_as_local"]
 [connection signal="mouse_entered" from="TitleMenu/VBoxContainer/buttonStart" to="TitleMenu/VBoxContainer/buttonStart" method="grab_focus"]
@@ -183,3 +223,9 @@ value = 2500.0
 [connection signal="mouse_entered" from="OptionsMenu/buttonBack" to="OptionsMenu/buttonBack" method="grab_focus"]
 [connection signal="pressed" from="OptionsMenu/buttonBack" to="." method="transition_to_menu" binds= [ "TitleMenu" ]]
 [connection signal="ready" from="OptionsMenu/buttonBack" to="OptionsMenu/buttonBack" method="grab_focus"]
+[connection signal="mouse_entered" from="OptionsMenu/Difficulty multiplier" to="OptionsMenu/Difficulty multiplier/HSlider" method="grab_focus"]
+[connection signal="mouse_entered" from="OptionsMenu/Difficulty multiplier/HSlider" to="OptionsMenu/Difficulty multiplier/HSlider" method="grab_focus"]
+[connection signal="value_changed" from="OptionsMenu/Difficulty multiplier/HSlider" to="OptionsMenu" method="set_difficulty"]
+[connection signal="mouse_entered" from="OptionsMenu/Difficulty multiplier/easy" to="OptionsMenu/Difficulty multiplier/HSlider" method="grab_focus"]
+[connection signal="mouse_entered" from="OptionsMenu/Difficulty multiplier/normal" to="OptionsMenu/Difficulty multiplier/HSlider" method="grab_focus"]
+[connection signal="mouse_entered" from="OptionsMenu/Difficulty multiplier/hard" to="OptionsMenu/Difficulty multiplier/HSlider" method="grab_focus"]

@@ -1,5 +1,7 @@
 extends Area2D
 class_name Drop
+# Drop represents a generic Enemy drop that can be picked up by the Player.
+
 
 export(int) var value := 0
 var target = null
@@ -11,6 +13,7 @@ var velocity := Vector2.ZERO
 onready var timer = $UndetectableTimer
 
 
+# Initialise the Drop with a position and velocity.
 func init(pos: Vector2, velocity: Vector2 = Vector2.INF) -> void:
 	global_position = pos
 	if velocity == Vector2.INF:
@@ -18,6 +21,7 @@ func init(pos: Vector2, velocity: Vector2 = Vector2.INF) -> void:
 	self.velocity = velocity
 
 func _ready() -> void:
+	# Play bobbing up and down animation:
 	$BobbingAnimationPlayer.play("Bobbing")
 
 func _physics_process(delta: float) -> void:
@@ -29,9 +33,10 @@ func _physics_process(delta: float) -> void:
 	global_position += velocity * delta
 	velocity *= 0.95
 
+# Sets the entity that this Drop should fly towards (usually the Player).
 func set_target(target) -> void:
 	self.target = target
 
-
+# Makes the Drop detectable after a brief grace period.
 func _on_UndetectableTimer_timeout() -> void:
 	monitorable = true

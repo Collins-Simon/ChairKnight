@@ -1,23 +1,27 @@
 extends Character
 class_name Player
+# Player represents the playable Character that can grapple to objects.
 
 
 var rope_scene = preload("res://Scenes/Equipment/Rope.tscn")
 var grapple_rope: Rope = null
 var currentRoom = null
 var coins := 0
+var diving = false
+var damaged = false
 
 onready var hitbox = $Hitbox
 onready var death_tween = $DeathTween
 onready var anim_sprite = $AnimatedSprite
-var diving = false
-var damaged = false
 
+
+# Transition to the walking animation when special animations are finished.
 func _on_AnimatedSprite_animation_finished():
 	if(anim_sprite.get_animation() == "Dive"):
 		damaged = false
 		diving = false
 		anim_sprite.set_animation("Walk")
+
 	if(anim_sprite.get_animation() == "Damaged"):
 		damaged	= false
 		diving = false
@@ -37,9 +41,8 @@ func _physics_process(delta: float) -> void:
 	# Make the damage of the Player's hitbox proportional its speed:
 	hitbox.damage = linear_velocity.length()
 
-	#Handle animations
-	#Set orientation
-
+	# Handle animations
+	# Set orientation based on velocity:
 	if(linear_velocity.x > 5):
 		anim_sprite.flip_h = false
 	elif(linear_velocity.x < -5):
@@ -48,20 +51,17 @@ func _physics_process(delta: float) -> void:
 		anim_sprite.set_animation("Idle")
 		anim_sprite.modulate = Color(1,1,1)
 
+	# If moving fast enough, play the walking animation:
 	if(linear_velocity.length() > 5 and !diving and !damaged):
 		anim_sprite.set_animation("Walk")
 		anim_sprite.modulate = Color(1,1,1)
 
 
+# Play the damaged animation when the Player is damaged.
 func _on_Player_damaged(character, amount):
 	damaged = true
 	anim_sprite.set_animation("Damaged")
-
-
-	#anim_sprite.modulate = "0.945098,0.219608,0.219608,1"
-	anim_sprite.modulate = Color(0.945098,0.219608,0.219608)
-
-	pass # Replace with function body.
+	anim_sprite.modulate = Color(0.945098,0.219608,0.219608) # red
 
 
 # Grapple a given target.
@@ -124,7 +124,6 @@ func _on_DropPickupArea_area_entered(area: Drop) -> void:
 		emit_signal("healed", self, heal_value)
 	elif area is Coin:
 		coins += value
-		print("picked up coin. total: ", coins)
 	area.queue_free()
 
 
