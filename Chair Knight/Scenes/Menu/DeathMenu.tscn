@@ -38,9 +38,6 @@ margin_right = 83.0
 margin_bottom = 127.0
 grow_horizontal = 2
 grow_vertical = 2
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="buttonRestart" type="Button" parent="VBoxContainer"]
 margin_right = 166.0

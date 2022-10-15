@@ -30,6 +30,7 @@ animations = [ {
 
 [node name="Coin" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+value = 1
 
 [node name="Sprite" parent="SpriteHolder" index="0"]
 visible = false
@@ -37,5 +38,5 @@ visible = false
 [node name="AnimatedSprite" type="AnimatedSprite" parent="SpriteHolder" index="1"]
 scale = Vector2( 2, 2 )
 frames = SubResource( 5 )
-frame = 3
+frame = 2
 playing = true

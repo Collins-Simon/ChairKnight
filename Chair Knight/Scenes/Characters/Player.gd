@@ -120,6 +120,7 @@ func _on_DropPickupArea_area_entered(area: Drop) -> void:
 		health += min(value, max_health - health)
 	elif area is Coin:
 		coins += value
+		print("picked up coin. total: ", coins)
 	area.queue_free()
 
 
