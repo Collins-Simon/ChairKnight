@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Menu/DeathMenu.gd" type="Script" id=1]
+[ext_resource path="res://Menu_Theme_1.tres" type="Theme" id=2]
+[ext_resource path="res://Scenes/Drops/Coin.tscn" type="PackedScene" id=3]
+
+[node name="DeathMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[node name="Background" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="labelDeath" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -62.0
+margin_top = -140.0
+margin_right = 65.0
+margin_bottom = -109.0
+grow_horizontal = 2
+text = "YOU DIED!"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -83.0
+margin_top = 34.0
+margin_right = 83.0
+margin_bottom = 127.0
+grow_horizontal = 2
+grow_vertical = 2
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="buttonRestart" type="Button" parent="VBoxContainer"]
+margin_right = 166.0
+margin_bottom = 37.0
+text = "RESTART?"
+
+[node name="buttonMainMenu" type="Button" parent="VBoxContainer"]
+margin_top = 56.0
+margin_right = 166.0
+margin_bottom = 93.0
+text = "MAIN MENU"
+
+[node name="labelScore" type="Label" parent="."]
+margin_left = 452.0
+margin_top = 257.0
+margin_right = 536.0
+margin_bottom = 288.0
+text = "Score: "
+
+[node name="score" type="Label" parent="."]
+margin_left = 538.0
+margin_top = 258.0
+margin_right = 578.0
+margin_bottom = 289.0
+
+[node name="Coin" parent="." instance=ExtResource( 3 )]
+
+[connection signal="ready" from="." to="." method="set_paused" binds= [ true ]]
+[connection signal="tree_exiting" from="." to="." method="set_paused" binds= [ false ]]
+[connection signal="mouse_entered" from="VBoxContainer/buttonRestart" to="VBoxContainer/buttonRestart" method="grab_focus"]
+[connection signal="pressed" from="VBoxContainer/buttonRestart" to="." method="restart"]
+[connection signal="mouse_entered" from="VBoxContainer/buttonMainMenu" to="VBoxContainer/buttonMainMenu" method="grab_focus"]
+[connection signal="pressed" from="VBoxContainer/buttonMainMenu" to="." method="change_scene" binds= [ "res://Scenes/Menu/MenuSystem.tscn" ]]

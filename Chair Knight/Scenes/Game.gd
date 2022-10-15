@@ -142,3 +142,8 @@ func _on_World_room_cleared() -> void:
 
 func _on_Player_destroyed(body) -> void:
 	player_dead = true
+	yield(player.get_node("DeathTween"), "tween_all_completed")
+	var death_screen = load("res://Scenes/Menu/DeathMenu.tscn").instance()
+	death_screen.score = player.coins
+	$CanvasLayer.add_child(death_screen)
+	
