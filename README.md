@@ -42,3 +42,6 @@ The executables can be downloaded from the cicd pipeline artifacts:<br>
 1. Click restart
 1. Press escape to pause
 
+### Videos
+* [Chair Knight Gameplay Video](https://youtu.be/3aINhSnYQqE)
+* [Chair Knight Code Documentation Video](https://youtu.be/yZQDyQa5kjQ)
