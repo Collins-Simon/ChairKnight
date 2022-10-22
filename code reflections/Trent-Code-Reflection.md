@@ -16,7 +16,7 @@
     - Automated CI/CD pipeline (ALL)
     - Setting Up repository / settings (SOME)
 
-###### Video link (critical aspects)
+###### [Video link (critical aspects)](Trent-Code_Reflection-Video.mp4)
 ###### Most interesting part of code I worked on.
 [Menu system](../Chair Knight/Scenes/Menu/MenuSystem.gd) and [SubMenu](../Chair Knight/Scenes/Menu/SubMenu.gd) classes<br>
 The menu system was designed in such a way that adding a new screen is easy and does not require much code reproduction. It was also designed to be modified readily throught the use of the Memu_Theme object.<br>
