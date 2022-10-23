@@ -7,8 +7,7 @@ Project Role: Room/Corridor Generation, Player Tracking, Entity Spawning, Misc.
 **Sections worked on**
 
 Game (Most)
-Room (All)
-Corridor (All)
+Room + Corridor (All)
 Player (Touched)
 Character (Touched)
 
