@@ -7,13 +7,16 @@ Project Role: Room/Corridor Generation, Player Tracking, Entity Spawning, Misc.
 **Sections worked on**
 
 Game (Most)
+
 Room + Corridor (All)
+
 Player (Touched)
+
 Character (Touched)
 
 #### Video Link
-https://www.youtube.com/watch?v=dQw4w9WgXcQ
-# (Remember to replace with actual link don't be dumb future me)
+https://www.youtube.com/watch?v=KQEkrOp7-7w
+Subtitles elaborate on some explanations.
 
 #### Most Interesting Code Contribution
 
@@ -27,7 +30,7 @@ The game also needs to check, if the player is not just closest to the room but 
 
 ### Section I am Most Proud of
 
-Room.gd, in its entirety
+Room.gd, in its entirety.
 
 I have not previously worked in Godot before; Room.gd was my first attempt working in Godot, and I started with one of the most essential and challenging to implement components of the game, room creation. In this context, I'm very proud of how this turned out; I feel the rooms ended up with solid variation and reproducibility, and the way they're handled by game logic is fairly elegant in minimising resource use in memory. Aspects like addObstacles are poorly written, requiring manually writing out an array of arrays, but for my first endeavour in the engine, I'm very happy with how Room.gd is handled overall.
 
