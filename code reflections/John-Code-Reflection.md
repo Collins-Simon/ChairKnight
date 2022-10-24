@@ -33,14 +33,13 @@
 
 
 #### Video Discussing Critical Aspects of My Code
-https://www.youtube.com/watch?v=dQw4w9WgXcQ
+https://youtu.be/mOliKQZD0Hw
 <!--
 - GrappleBody Hierarchy (Inheritance mixed with composition)
 - Hitboxes, Hurtboxes (Use of collision layers)
 - Entity Spawning (Centralisation of spawning)
 - Ropes (Works well, poor decomposition and comments)
 -->
-# (Remember to replace with actual link don't be dumb future me)
 
 #### Most Interesting Code Contribution
 
